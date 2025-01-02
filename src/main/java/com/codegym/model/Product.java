@@ -17,5 +17,5 @@ public class Product {
     private String imageURL;
     @Lob
     private String description;
-    private int all_reviews;
+    private Integer allReviews;
 }
