@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách sản phẩm</title>
+</head>
+<body>
+<h1>Danh sách sản phẩm</h1>
+
+<a href="/products/create">Tạo sản phẩm mới</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Tên sản phẩm</th>
+        <th>Giá</th>
+        <th>Số lượng</th>
+        <th>URL Hình ảnh</th>
+        <th>Mô tả</th>
+        <th>Số đánh giá</th>
+        <th>Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.quantity}"></td>
+        <td th:text="${product.imageURL}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.allReviews}"></td>
+        <td>
+            <a th:href="@{/products/edit/{id}(id=${product.id})}">Chỉnh sửa</a> |
+            <a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <a th:href="@{/products?page=0&size=5}">Trang 1</a>
+    <a th:href="@{/products?page=1&size=5}">Trang 2</a>
+</div>
+</body>
+</html>
