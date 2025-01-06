@@ -65,4 +65,14 @@ public class ProductController {
         productService.remove(id);
         return new ModelAndView("redirect:/products");
     }
+// Search
+    @GetMapping("/search")
+    public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,
+                                       @RequestParam(value = "page", defaultValue = "0") int page,
+                                       @RequestParam(value = "size", defaultValue = "5") int size) {
+        ModelAndView modelAndView = new ModelAndView("/product/list");
+        modelAndView.addObject("products", productService.findAllByNameContaining(PageRequest.of(page, size), name));
+        modelAndView.addObject("searchName", name);
+        return modelAndView;
+    }
 }
