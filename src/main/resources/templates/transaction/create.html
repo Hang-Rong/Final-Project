@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Transaction</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Create transaction</h1>
+<p>
+  <a href="/transactions">Transaction list</a>
+</p>
+<form th:action="@{/transactions/create}" th:object="${transaction}" method="post">
+  <table class="table">
+    <tr>
+      <td>Mã giao dịch</td>
+      <td><input type="text" th:field="*{id}"/></td>
+    </tr>
+    <tr>
+      <td>Tên khách hàng</td>
+      <td>
+        <select th:field="*{customer}">
+          <option th:each="customer:${customers}" th:value="${customer}" th:text="${customer.getName()}">
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Price:</td>
+      <td><input type="text" th:field="*{price}"/></td>
+    </tr>
+    <tr>
+      <td>Loại giao dịch:</td>
+      <td><input type="radio" th:each="type:${T(com.codegym.realestatemanagement.model.SERVICETYPE).values()}"
+                 th:field="*{servicetype}" th:value="${type}" th:text="${type}"/>
+      </td>
+    </tr>
+    <!--        <tr>-->
+    <!--            <td>Image:</td>-->
+    <!--            <td><input type="text" th:field="*{imageUrl}"/></td>-->
+    <!--        </tr>-->
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Create transaction" class="btn btn-success">
+        <input type="submit" value="Discard" class="btn btn-danger"></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

@@ -3,9 +3,6 @@ package com.codegym.model;
 import lombok.Data;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.List;
 
 @Entity
@@ -15,23 +12,10 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private Long id;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @Getter
-    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
-
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @Getter
-    @Setter
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Product> products;
-
-    public Transaction() {}
-
-
 
 }
