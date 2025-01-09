@@ -36,7 +36,11 @@ public class ProductController {
     // Hiển thị ds sp
     @GetMapping
     public ModelAndView listProducts(@RequestParam(value = "page", defaultValue = "0") int page,
+<<<<<<< HEAD
                                      @RequestParam(value = "size", defaultValue = "3") int size) {
+=======
+                                     @RequestParam(value = "size", defaultValue = "5") int size) {
+>>>>>>> 57f7fda445cb61cd7042ca40aa230d1f4cab130f
         ModelAndView modelAndView = new ModelAndView("/product/list");
         modelAndView.addObject("products", productService.findAll(PageRequest.of(page, size)));
         return modelAndView;
@@ -54,7 +58,11 @@ public class ProductController {
     // Lưu chỉnh sửa sp (Update)
     @PostMapping("/edit/{id}")
     public ModelAndView updateProduct(@PathVariable("id") Long id, @ModelAttribute("product") Product product) {
+<<<<<<< HEAD
         product.setId(id);
+=======
+        product.setId(id);  // Đảm bảo ID không bị thay đổi khi chỉnh sửa
+>>>>>>> 57f7fda445cb61cd7042ca40aa230d1f4cab130f
         productService.save(product);
         return new ModelAndView("redirect:/products");
     }
@@ -65,6 +73,7 @@ public class ProductController {
         productService.remove(id);
         return new ModelAndView("redirect:/products");
     }
+<<<<<<< HEAD
 // Search
     @GetMapping("/search")
     public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,
@@ -75,4 +84,6 @@ public class ProductController {
         modelAndView.addObject("searchName", name);
         return modelAndView;
     }
+=======
+>>>>>>> 57f7fda445cb61cd7042ca40aa230d1f4cab130f
 }
