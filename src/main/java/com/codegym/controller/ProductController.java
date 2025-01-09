@@ -36,7 +36,7 @@ public class ProductController {
     // Hiển thị ds sp
     @GetMapping
     public ModelAndView listProducts(@RequestParam(value = "page", defaultValue = "0") int page,
-                                     @RequestParam(value = "size", defaultValue = "5") int size) {
+                                     @RequestParam(value = "size", defaultValue = "3") int size) {
         ModelAndView modelAndView = new ModelAndView("/product/list");
         modelAndView.addObject("products", productService.findAll(PageRequest.of(page, size)));
         return modelAndView;
@@ -54,7 +54,7 @@ public class ProductController {
     // Lưu chỉnh sửa sp (Update)
     @PostMapping("/edit/{id}")
     public ModelAndView updateProduct(@PathVariable("id") Long id, @ModelAttribute("product") Product product) {
-        product.setId(id);  // Đảm bảo ID không bị thay đổi khi chỉnh sửa
+        product.setId(id);
         productService.save(product);
         return new ModelAndView("redirect:/products");
     }
@@ -64,5 +64,15 @@ public class ProductController {
     public ModelAndView deleteProduct(@PathVariable("id") Long id) {
         productService.remove(id);
         return new ModelAndView("redirect:/products");
+    }
+// Search
+    @GetMapping("/search")
+    public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,
+                                       @RequestParam(value = "page", defaultValue = "0") int page,
+                                       @RequestParam(value = "size", defaultValue = "5") int size) {
+        ModelAndView modelAndView = new ModelAndView("/product/list");
+        modelAndView.addObject("products", productService.findAllByNameContaining(PageRequest.of(page, size), name));
+        modelAndView.addObject("searchName", name);
+        return modelAndView;
     }
 }
