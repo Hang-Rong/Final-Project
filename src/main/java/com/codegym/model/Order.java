@@ -18,8 +18,13 @@ public class Order {
     private int id;
 //    private Date date;
 
-//    private String paymentMethod;
-//    private String status;
+
+    @Getter
+    @Setter
+    private String paymentMethod;
+    @Getter
+    @Setter
+    private String status;
     @Getter
     @Setter
     private Date orderDate;
