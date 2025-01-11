@@ -25,16 +25,12 @@ package com.codegym.model;
 import lombok.Data;
 
 import jakarta.persistence.*;
-<<<<<<< HEAD
 import lombok.Getter;
 import lombok.Setter;
-=======
->>>>>>> 57f7fda445cb61cd7042ca40aa230d1f4cab130f
 
 import java.util.Date;
 
 @Entity
-<<<<<<< HEAD
 @Table(name = "orders")
 public class Order {
     @Id
@@ -67,18 +63,4 @@ public class Order {
         this.totalPrice = totalPrice;
 
     }
-
-=======
-@Table(name = "order")
-@Data
-
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Date date;
-    private Double total;
-    private String paymentMethod;
-    private String status;
->>>>>>> 57f7fda445cb61cd7042ca40aa230d1f4cab130f
 }

@@ -95,11 +95,8 @@ public class ProductController {
     // Lưu chỉnh sửa sp (Update)
     @PostMapping("/edit/{id}")
     public ModelAndView updateProduct(@PathVariable("id") Long id, @ModelAttribute("product") Product product) {
-<<<<<<< HEAD
-        product.setId(id);
-=======
         product.setId(id);  // Đảm bảo ID không bị thay đổi khi chỉnh sửa
->>>>>>> 57f7fda445cb61cd7042ca40aa230d1f4cab130f
+
         productService.save(product);
         return new ModelAndView("redirect:/products");
     }
@@ -110,7 +107,6 @@ public class ProductController {
         productService.remove(id);
         return new ModelAndView("redirect:/products");
     }
-<<<<<<< HEAD
 // Search
     @GetMapping("/search")
     public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,
@@ -121,6 +117,5 @@ public class ProductController {
         modelAndView.addObject("searchName", name);
         return modelAndView;
     }
-=======
->>>>>>> 57f7fda445cb61cd7042ca40aa230d1f4cab130f
+
 }
