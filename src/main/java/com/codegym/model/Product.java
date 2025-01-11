@@ -18,6 +18,6 @@ public class Product {
     private String imageURL;
     @Lob
     private String description;
-    private Integer allReviews;
-    private Integer allRating;
+    private Integer allReviews = 0;
+    private Integer allRating = 0;
 }
