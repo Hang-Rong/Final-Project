@@ -8,8 +8,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -26,13 +32,37 @@ public class ProductController {
         return modelAndView;
     }
 //Lưu sp moi
+//    @PostMapping("/create")
+//    public ModelAndView saveProduct(@ModelAttribute("product") Product product) {
+//        productService.save(product);
+//        ModelAndView modelAndView = new ModelAndView("/product/create");
+//        modelAndView.addObject("product", new Product());
+//        return modelAndView;
+//    }
+
     @PostMapping("/create")
-    public ModelAndView saveProduct(@ModelAttribute("product") Product product) {
+    public ModelAndView saveProduct(@ModelAttribute("product") Product product,
+                                    @RequestParam("image") MultipartFile image) {
+        if (!image.isEmpty()) {
+            try {
+                String uploadDir = "uploads/images/";
+                Path path = Paths.get(uploadDir + image.getOriginalFilename());
+                Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+                product.setImageName(image.getOriginalFilename());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         productService.save(product);
+
         ModelAndView modelAndView = new ModelAndView("/product/create");
         modelAndView.addObject("product", new Product());
         return modelAndView;
     }
+
+
     // Hiển thị ds sp
     @GetMapping
     public ModelAndView listProducts(@RequestParam(value = "page", defaultValue = "0") int page,

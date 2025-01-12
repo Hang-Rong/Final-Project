@@ -15,7 +15,7 @@ public class Product {
     private Double price;
     private Integer quantity;
     @Lob
-    private String imageURL;
+    private String imageName;
     @Lob
     private String description;
     private Integer allReviews;
