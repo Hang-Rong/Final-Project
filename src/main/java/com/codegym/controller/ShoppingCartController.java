@@ -51,7 +51,6 @@ public class ShoppingCartController {
             session.setAttribute("cart", cart);
         } else {
             List<Items> cart = (List<Items>) session.getAttribute("cart");
-            // using method isExisting here
             int index = isExisting(id, session);
             if (index == -1)
                 cart.add(new Items(this.pm.findById(id).get(), 1));
@@ -70,12 +69,11 @@ public class ShoppingCartController {
     public String checkout(HttpSession session) {
         List<Items> cart = (List<Items>) session.getAttribute("cart");
 
-        //Add new Order
         Order order = new Order();
         order.setOrderDate(new Date());
+        order.setStatus("Chờ xác nhận");
         om.save(order);
 
-        //Add new OrderDetail
         for (Items item : cart) {
             Product product = item.getProduct();
             OrderDetail orderDetail = new OrderDetail();

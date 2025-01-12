@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .product-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .product-info {
+            margin-top: 20px;
+        }
+        .product-info h1 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .product-info p {
+            margin: 5px 0;
+        }
+        .product-actions {
+            margin-top: 20px;
+        }
+        .product-actions a {
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #007BFF;
+            margin-right: 10px;
+        }
+        .product-actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="product-container">
+    <div class="product-image">
+        <img th:src="${product.imageURL}" alt="Hình ảnh sản phẩm">
+    </div>
+    <div class="product-info">
+        <h1 th:text="${product.name}">Tên sản phẩm</h1>
+        <p><strong>Giá:</strong> <span th:text="${product.price}">0</span> VND</p>
+        <p><strong>Số lượng:</strong> <span th:text="${product.quantity}">0</span></p>
+        <p><strong>Mô tả:</strong></p>
+        <p th:text="${product.description}">Mô tả sản phẩm</p>
+        <p><strong>Đánh giá:</strong>
+            <span th:text="${product.allReviews}">0</span> lượt đánh giá,
+            trung bình <span th:text="${product.allRating}">0</span> sao
+        </p>
+    </div>
+    <div class="product-actions">
+        <a th:href="@{/products/edit/{id}(id=${product.id})}">Sửa sản phẩm</a>
+        <a th:href="@{/products}" onclick="return confirm('Bạn có chắc chắn muốn quay lại danh sách không?')">Quay lại</a>
+    </div>
+</div>
+
+</body>
+</html>

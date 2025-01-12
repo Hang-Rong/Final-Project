@@ -4,6 +4,9 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "product")
 @Data
@@ -18,6 +21,7 @@ public class Product {
     private String imageURL;
     @Lob
     private String description;
-    private Integer allReviews;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
     private Integer allRating;
 }

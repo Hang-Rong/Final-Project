@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="review-section">
+    <h2>Đánh giá sản phẩm</h2>
+    <form th:action="@{/products/review/{productId}(productId=${product.id})}"
+          th:object="${newReview}" method="post">
+        <label for="rating">Chọn điểm:</label>
+        <select id="rating" name="rating" th:field="*{rating}">
+            <option value="1">1 sao</option>
+            <option value="2">2 sao</option>
+            <option value="3">3 sao</option>
+            <option value="4">4 sao</option>
+            <option value="5">5 sao</option>
+        </select><br>
+
+        <label for="comment">Bình luận:</label><br>
+        <textarea id="comment" name="comment" th:field="*{comment}" required></textarea><br>
+
+        <button type="submit">Gửi đánh giá</button>
+    </form>
+
+    <h3>Đánh giá từ người dùng</h3>
+    <ul>
+        <li th:each="review : ${reviews}">
+            <p><strong>Điểm:</strong> <span th:text="${review.rating}">0</span> sao</p>
+            <p><strong>Bình luận:</strong> <span th:text="${review.comment}"></span></p>
+            <p><em>Ngày đánh giá:</em> <span th:text="${#dates.format(review.reviewDate, 'dd-MM-yyyy')}"></span></p>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
