@@ -31,7 +31,7 @@
         <td th:text="${order.paymentMethod}"></td>
         <td th:text="${order.status}"></td>
         <td>
-            <a th:href="@{/orders/detail/{id}(id=${order.id})}">Chi tiết</a> |
+            <a th:href="@{/order/detail/{id}(id=${order.id})}">Chi tiết</a> |
 <!--            <a th:href="@{/orders/delete/{id}(id=${order.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>-->
         </td>
     </tr>
