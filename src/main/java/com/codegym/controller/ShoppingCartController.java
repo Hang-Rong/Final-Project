@@ -5,11 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.codegym.model.Items;
-import com.codegym.model.Product;
-import com.codegym.model.Order;
-import com.codegym.model.OrderDetail;
-
+import com.codegym.model.*;
 
 
 import com.codegym.service.IProductService;
@@ -76,6 +72,7 @@ public class ShoppingCartController {
         om.save(order);
 
         //Add new OrderDetail
+        double totalprice = 0;
         for (Items item : cart) {
             Product product = item.getProduct();
             OrderDetail orderDetail = new OrderDetail();
@@ -83,7 +80,14 @@ public class ShoppingCartController {
             orderDetail.setProduct(product);
             orderDetail.setQuanity(item.getQuantity());
             odm.save(orderDetail);
+            totalprice += product.getPrice()*item.getQuantity();
         }
+
+        order.setTotalPrice(totalprice);
+        order.setStatus(OrderStatus.ORDER_CREATE);
+        om.save(order);
+
+
 
         session.removeAttribute("cart");
         return "/product/cart";

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách Đơn hàng</title>
+</head>
+<body>
+<h1>Danh sách Đơn hàng</h1>
+<!--<form action="/orders/search" method="get">-->
+<!--    <input type="text" name="name"  placeholder="Tìm kiếm sản phẩm...">-->
+<!--    <button type="submit">Tìm kiếm</button>-->
+<!--</form>-->
+
+<!--<a href="/orders/create">Tạo sản phẩm mới</a>-->
+
+<table>
+    <thead>
+    <tr>
+        <th>Mã đơn hàng</th>
+        <th>Ngày tạo đơn</th>
+        <th>Giá trị đơn hàng</th>
+        <th>Hình thức thanh toán</th>
+        <th>Trạng thái</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.orderDate}"></td>
+        <td th:text="${order.totalPrice}"></td>
+        <td th:text="${order.paymentMethod}"></td>
+        <td th:text="${order.status}"></td>
+        <td>
+            <a th:href="@{/orders/detail/{id}(id=${order.id})}">Chi tiết</a> |
+<!--            <a th:href="@{/orders/delete/{id}(id=${order.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+<!--    <a th:href="@{/orders?page=0&size=5}">Trang 1</a>-->
+<!--    <a th:href="@{/orders?page=1&size=5}">Trang 2</a>-->
+</div>
+</body>
+</html>

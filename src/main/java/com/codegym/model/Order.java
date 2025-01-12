@@ -1,7 +1,5 @@
 package com.codegym.model;
 
-import lombok.Data;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +22,7 @@ public class Order {
     private String paymentMethod;
     @Getter
     @Setter
-    private String status;
+    private OrderStatus status;
     @Getter
     @Setter
     private Date orderDate;
