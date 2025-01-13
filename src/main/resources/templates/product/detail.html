@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chi tiết sản phẩm</title>
+</head>
+<body>
+<h1>Chi tiết sản phẩm</h1>
+
+<div class="product-details">
+    <img th:src="${product.imageURL}" alt="Hình ảnh sản phẩm" style="max-width: 300px;">
+    <h2 th:text="${product.name}">Tên sản phẩm</h2>
+    <p><strong>Giá:</strong> <span th:text="${product.price}">0</span> VND</p>
+    <p><strong>Số lượng:</strong> <span th:text="${product.quantity}">0</span></p>
+    <p><strong>Mô tả:</strong></p>
+    <p th:text="${product.description}">Mô tả sản phẩm</p>
+    <p><strong>Số lượt đánh giá:</strong> <span th:text="${product.allReviews}">0</span></p>
+    <p><strong>Điểm trung bình:</strong> <span th:text="${product.allRating}">0</span> sao</p>
+</div>
+
+<a href="/products">Quay lại danh sách sản phẩm</a>
+
+<h2>Đánh giá sản phẩm</h2>
+
+<div th:each="review : ${reviews}">
+    <p><strong>Tác giả:</strong> <span th:text="${review.author}">Tên tác giả</span></p>
+    <p><strong>Ngày:</strong> <span th:text="${#dates.format(review.date, 'dd/MM/yyyy')}">01/01/2023</span></p>
+    <p><strong>Bình luận:</strong></p>
+    <p th:text="${review.comment}">Nội dung bình luận</p>
+    <hr>
+</div>
+
+<form th:action="@{/reviews/review/{productId}(productId=${product.id})}" method="post">
+    <h3>Gửi đánh giá của bạn</h3>
+
+    <label for="author">Tác giả:</label>
+    <input id="author" name="author" type="text" required />
+
+    <br>
+
+    <label for="comment">Bình luận:</label>
+    <textarea id="comment" name="comment" rows="4" required></textarea>
+    <br>
+
+    <button type="submit">Gửi đánh giá</button>
+</form>
+</body>
+</html>

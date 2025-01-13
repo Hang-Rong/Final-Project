@@ -2,9 +2,11 @@ package com.codegym.model;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "OrderDetails")
+@Data
 public class OrderDetail{
 
     private int id;

@@ -33,7 +33,9 @@
         <td th:text="${product.description}"></td>
         <td th:text="${product.allReviews}"></td>
         <td>
+            <a th:href="@{/products/detail/{id}(id=${product.id})}">Xem chi tiết</a>
             <a th:href="@{/products/edit/{id}(id=${product.id})}">Chỉnh sửa</a> |
+            <a th:href="@{/shoppingcart/ordernow/{id}(id=${product.id})}">Add to cart</a> |
             <a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
         </td>
     </tr>

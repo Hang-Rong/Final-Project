@@ -70,12 +70,10 @@ public class ShoppingCartController {
     public String checkout(HttpSession session) {
         List<Items> cart = (List<Items>) session.getAttribute("cart");
 
-        //Add new Order
         Order order = new Order();
         order.setOrderDate(new Date());
         om.save(order);
 
-        //Add new OrderDetail
         for (Items item : cart) {
             Product product = item.getProduct();
             OrderDetail orderDetail = new OrderDetail();
