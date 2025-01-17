@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center">Welcome, <span th:text="${merchant.name}">Merchant Name</span>!</h2>
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Your Information</h4>
+        </div>
+        <div class="card-body">
+            <ul>
+                <li><strong>Name:</strong> <span th:text="${merchant.name}">Merchant Name</span></li>
+                <li><strong>Email:</strong> <span th:text="${merchant.email}">merchant@example.com</span></li>
+                <li><strong>Phone:</strong> <span th:text="${merchant.phone}">123456789</span></li>
+                <li><strong>Address:</strong> <span th:text="${merchant.address}">Some Address</span></li>
+                <li><strong>Slogan:</strong> <span th:text="${merchant.slogan}">Best Merchant Ever</span></li>
+            </ul>
+
+            <h5>Avatar:</h5>
+            <img th:src="${merchant.avatarImage}" alt="Avatar" class="img-fluid" width="200px">
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a href="/merchant/register" class="btn btn-primary">Back to Registration</a>
+        <a href="/products">Products</a>
+    </div>
+</div>
+</body>
+</html>
