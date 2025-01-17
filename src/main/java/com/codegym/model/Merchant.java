@@ -17,7 +17,8 @@ public class Merchant {
     private String name;
     private String phone;
     private String email;
-    private Date birthday;
     private String address;
+    @Column(name = "avatar_image")
     private String avatarImage;
+    private String slogan;
 }
