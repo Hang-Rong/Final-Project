@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký Merchant</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Đăng ký Cửa Hàngt</h2>
+
+
+    <div th:if="${message}" class="alert alert-success">
+        <span th:text="${message}"></span>
+    </div>
+
+
+    <form method="post" enctype="multipart/form-data" action="/merchant/register">
+        <div class="form-group">
+            <label for="name">Tên Cửa Hàng:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Số điện thoại:</label>
+            <input type="text" id="phone" name="phone" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Địa chỉ:</label>
+            <input type="text" id="address" name="address" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="avatarImage">Ảnh đại diện:</label>
+            <input type="file" id="avatarImage" name="avatarImage" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="slogan">Slogan:</label>
+            <input type="text" id="slogan" name="slogan" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
+    </form>
+    <a href="merchant/home">Cửa Hàng cua toi</a>
+</div>
+</body>
+</html>
+

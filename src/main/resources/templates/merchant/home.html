@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Thông tin Cửa Hàng</h2>
+
+    <div>
+        <p>Ảnh đại diện:</p>
+        <img th:src="@{/uploads/images/{image}(image=${merchant.avatarImage})}" alt="Ảnh đại diện">
+        <h3>Tên: <span th:text="${merchant.name}"></span></h3>
+        <p>Số điện thoại: <span th:text="${merchant.phone}"></span></p>
+        <p>Email: <span th:text="${merchant.email}"></span></p>
+        <p>Địa chỉ: <span th:text="${merchant.address}"></span></p>
+        <p>Slogan: <span th:text="${merchant.getSlogan()}"></span></p>
+
+
+    </div>
+</div>
+</body>
+</html>
