@@ -2,10 +2,12 @@ package com.codegym.service;
 
 import com.codegym.model.Product;
 import com.codegym.repository.IProductRepository;
+import com.codegym.repository.IReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -13,6 +15,9 @@ import java.util.Optional;
 public class ProductService implements IProductService{
     @Autowired
     private IProductRepository iProductRepository;
+
+    @Autowired
+    private IReviewRepository reviewRepository;
 
     @Override
     public Iterable<Product> findAll() {
@@ -30,7 +35,10 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    @Transactional
     public void remove(Long id) {
+        reviewRepository.deleteByProductId(id);
+
         iProductRepository.deleteById(id);
     }
 

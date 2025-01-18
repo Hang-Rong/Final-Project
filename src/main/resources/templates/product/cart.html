@@ -7,7 +7,7 @@
 <body>
 <div>
     <h1>Shopping Cart</h1>
-    <form th:action="@{/shoppingcart/update}" th:method="POST">
+    <!--<form th:action="@{/shoppingcart/update}" th:method="POST">-->
         <table>
             <tr>
                 <th>Options</th>
@@ -29,6 +29,7 @@
             </tr>
         </table>
         <a th:href="@{/shoppingcart/checkout}">Checkout</a>
+        <a th:href="@{/products}">Home</a>
     </form>
 </div>
 <script>

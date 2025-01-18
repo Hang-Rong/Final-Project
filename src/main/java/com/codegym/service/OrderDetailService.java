@@ -31,4 +31,12 @@ public class OrderDetailService implements IOrderDetailService{
     public void remove(Long id) {
         iOrderDetailRepository.deleteById(id);
     }
+
+    public Iterable<OrderDetail> getOrderDetailsByOrderId(int orderId){
+        return iOrderDetailRepository.findByOrderId(orderId);
+
+    }
+//        return null;
+//    }
+
 }
