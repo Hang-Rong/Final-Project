@@ -14,7 +14,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Customer customer;
+    private User user;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Product> products;
 

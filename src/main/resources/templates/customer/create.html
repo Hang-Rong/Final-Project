@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New Customer</title>
+    <title>New User</title>
 </head>
 <body>
 
-<form th:action="@{/customer/create}" th:object="${customer}" method="post" enctype="multipart/form-data" >
+<form th:action="@{/user/create}" th:object="${user}" method="post" enctype="multipart/form-data" >
     <div>
         <label for="name">Name</label>
         <input type="text" id="name" th:field="*{name}"/>

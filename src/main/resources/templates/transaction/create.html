@@ -20,8 +20,8 @@
     <tr>
       <td>Tên khách hàng</td>
       <td>
-        <select th:field="*{customer}">
-          <option th:each="customer:${customers}" th:value="${customer}" th:text="${customer.getName()}">
+        <select th:field="*{user}">
+          <option th:each="user:${users}" th:value="${user}" th:text="${user.getName()}">
           </option>
         </select>
       </td>

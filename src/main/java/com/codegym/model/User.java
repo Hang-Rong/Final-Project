@@ -7,9 +7,9 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "user")
 @Data
-public class Customer {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
