@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h1>Shopping Cart</h1>
+    <h2>UPDATE</h2>
+    <form th:action="@{/shoppingcart/update}" th:method="GET">
+        <table>
+            <tr>
+                <th>Options</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Sub Total</th>
+            </tr>
+            <tr th:each="pr,iterStat : ${session.cart}">
+                <td align="center">
+                    <a th:href="@{/shoppingcart/delete/__${pr.product.id}__}">remove</a>
+                </td>
+                <td th:text="${pr.product.name.toString()}"></td>
+                <td th:text="${pr.product.price.toString()}"></td>
+                <td>
+                    <input type="number" th:name="qty" th:value="${pr.quantity.toString()}"/>
+                </td>
+                <td th:text="${pr.product.price * pr.quantity}"></td>
+            </tr>
+        </table>
+<!--        <a th:href="@{/shoppingcart/checkout}">Checkout</a>-->
+        <input type="submit" value="SAVE"/>
+    </form>
+</div>
+<script>
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 package com.codegym.model;
 
 import lombok.Data;
-
+import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -15,6 +15,8 @@ public class Customer {
     private Long id;
     private String name;
     private String phone;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private String email;
     private String address;

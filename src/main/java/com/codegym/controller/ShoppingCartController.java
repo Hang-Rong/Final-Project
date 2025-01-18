@@ -13,16 +13,10 @@ import com.codegym.service.IOrderService;
 import com.codegym.service.IOrderDetailService;
 
 
-
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -57,14 +51,14 @@ public class ShoppingCartController {
             }
             session.setAttribute("cart", cart);
         }
-        return "/product/cart";
+        return "/cart/cart";
     }
 
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-    public String checkout(HttpSession session) {
-        List<Items> cart = (List<Items>) session.getAttribute("cart");
+    @RequestMapping(value = "/checkout", method = RequestMethod.POST)
+    public String checkout(@ModelAttribute("cart") List<Items> cart, HttpSession session) {
+//        List<Items> cart = (List<Items>) session.getAttribute("cart");
 
         //Add new Order
         Order order = new Order();
@@ -73,6 +67,7 @@ public class ShoppingCartController {
 
         //Add new OrderDetail
         double totalprice = 0;
+
         for (Items item : cart) {
             Product product = item.getProduct();
             OrderDetail orderDetail = new OrderDetail();
@@ -87,11 +82,10 @@ public class ShoppingCartController {
         order.setStatus(OrderStatus.ORDER_CREATE);
         om.save(order);
 
-
-
         session.removeAttribute("cart");
-        return "/product/cart";
+        return "/cart/cart";
     }
+
 
     @SuppressWarnings("unchecked")
     private int isExisting(Long id, HttpSession session) {

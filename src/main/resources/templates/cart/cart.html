@@ -7,7 +7,7 @@
 <body>
 <div>
     <h1>Shopping Cart</h1>
-    <form th:action="@{/shoppingcart/update}" th:method="POST">
+    <form th:action="@{/shoppingcart/checkout}" th:method="POST">
         <table>
             <tr>
                 <th>Options</th>
@@ -28,7 +28,8 @@
                 <td th:text="${pr.product.price * pr.quantity}"></td>
             </tr>
         </table>
-        <a th:href="@{/shoppingcart/checkout}">Checkout</a>
+<!--        <a th:href="@{/shoppingcart/checkout}">Checkout</a>-->
+        <button type="submit">CHECKOUT</button>
     </form>
 </div>
 <script>
