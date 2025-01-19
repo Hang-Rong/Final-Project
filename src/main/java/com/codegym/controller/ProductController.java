@@ -51,6 +51,7 @@ public class ProductController {
         return modelAndView;
     }
 
+
     // Hiển thị form update
     @GetMapping("/edit/{id}")
     public ModelAndView showEditForm(@PathVariable("id") Long id) {
@@ -71,9 +72,11 @@ public class ProductController {
     // Xóa sp (Delete)
     @GetMapping("/delete/{id}")
     public ModelAndView deleteProduct(@PathVariable("id") Long id) {
-        productService.remove(id);
+        productService.remove(id); // Soft delete
         return new ModelAndView("redirect:/products");
     }
+
+
 // Search
     @GetMapping("/search")
     public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,

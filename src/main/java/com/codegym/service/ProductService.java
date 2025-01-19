@@ -5,6 +5,7 @@ import com.codegym.repository.IProductRepository;
 import com.codegym.repository.IReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,17 +17,14 @@ public class ProductService implements IProductService{
     @Autowired
     private IProductRepository iProductRepository;
 
-    @Autowired
-    private IReviewRepository reviewRepository;
-
     @Override
     public Iterable<Product> findAll() {
-        return iProductRepository.findAll();
+        return iProductRepository.findAllActive(PageRequest.of(0, Integer.MAX_VALUE));
     }
 
     @Override
     public Optional<Product> findById(Long id) {
-        return iProductRepository.findById(id);
+        return iProductRepository.findById(id).filter(product -> !product.isDeleted());
     }
 
     @Override
@@ -37,14 +35,16 @@ public class ProductService implements IProductService{
     @Override
     @Transactional
     public void remove(Long id) {
-        reviewRepository.deleteByProductId(id);
+        Product product = iProductRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
-        iProductRepository.deleteById(id);
+        product.setDeleted(true); // Mark as deleted
+        iProductRepository.save(product);
     }
 
     @Override
     public Page<Product> findAll(Pageable pageable) {
-        return iProductRepository.findAll(pageable);
+        return iProductRepository.findAllActive(pageable);
     }
 
     @Override

@@ -2,11 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Danh sách sản phẩm</title>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
 <h1>Danh sách sản phẩm</h1>
 <form action="/products/search" method="get">
-    <input type="text" name="name"  placeholder="Tìm kiếm sản phẩm...">
+    <input type="text" name="name" th:value="${searchName}" placeholder="Tìm kiếm sản phẩm...">
     <button type="submit">Tìm kiếm</button>
 </form>
 
@@ -26,7 +47,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="product : ${products}">
+    <tr th:each="product : ${products}" th:if="${!product.isDeleted}">
         <td th:text="${product.name}"></td>
         <td th:text="${product.price}"></td>
         <td th:text="${product.quantity}"></td>
@@ -36,18 +57,22 @@
         <td th:text="${product.description}"></td>
         <td th:text="${product.allReviews}"></td>
         <td>
-            <a th:href="@{/products/detail/{id}(id=${product.id})}">Xem chi tiết</a>
-            <a th:href="@{/products/edit/{id}(id=${product.id})}">Chỉnh sửa</a> |
-            <a th:href="@{/shoppingcart/ordernow/{id}(id=${product.id})}">Add to cart</a> |
-            <a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
+            <a th:href="@{/products/detail/{id}(id=${product.id})}">🔍 Xem chi tiết</a>
+            <a th:href="@{/products/edit/{id}(id=${product.id})}" style="color: blue;">✏️ Chỉnh sửa</a> |
+            <a th:href="@{/shoppingcart/ordernow/{id}(id=${product.id})}" style="color: green;">🛒 Add to cart</a> |
+            <a th:href="@{/products/delete/{id}(id=${product.id})}"
+               style="color: red;"
+               onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">❌ Xóa</a>
         </td>
     </tr>
     </tbody>
 </table>
 
 <div>
-    <a th:href="@{/products?page=0&size=5}">Trang 1</a>
-    <a th:href="@{/products?page=1&size=5}">Trang 2</a>
+    <span th:each="pageNumber : ${#numbers.sequence(0, products.totalPages - 1)}">
+        <a th:href="@{/products(page=${pageNumber}, size=5)}"
+           th:text="'Trang ' + (${pageNumber + 1})"></a>
+    </span>
 </div>
 </body>
 </html>
