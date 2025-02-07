@@ -19,4 +19,13 @@ public class AppRole implements GrantedAuthority {
     public String getAuthority() {
         return this.name;
     }
+
+    // Constructor mặc định (nếu cần)
+    public AppRole() {
+    }
+
+    // Constructor nhận tham số String name để tạo đối tượng AppRole
+    public AppRole(String name) {
+        this.name = name;
+    }
 }

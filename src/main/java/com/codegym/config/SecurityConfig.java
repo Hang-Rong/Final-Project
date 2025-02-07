@@ -81,8 +81,9 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         // ADMIN chỉ có quyền truy cập vào /admin**
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/products**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                         .requestMatchers("/products**", "/products/**").hasRole("ADMIN")
-                        .requestMatchers("/products**").hasRole("USER")
+
 
                         .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
 

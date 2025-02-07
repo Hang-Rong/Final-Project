@@ -1,41 +1,177 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tạo sản phẩm mới</title>
+    <style>
+        /* General reset for margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Style */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Logout button positioned in the top-right corner */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #ff3333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+
+        /* Main content */
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%; /* Make input fields fill the container */
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Button styling */
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%; /* Make the submit button fill the container */
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Back link */
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-<h1>Tạo sản phẩm mới</h1>
 
-<form th:action="@{/products/create}" th:object="${product}" method="post" enctype="multipart/form-data">
-    <div>
-        <label for="name">Tên sản phẩm:</label>
-        <input type="text" id="name" th:field="*{name}" />
-    </div>
-    <div>
-        <label for="price">Giá:</label>
-        <input type="number" id="price" th:field="*{price}" step="0.01" />
-    </div>
-    <div>
-        <label for="quantity">Số lượng:</label>
-        <input type="number" id="quantity" th:field="*{quantity}" />
-    </div>
-    <div>
-        <label for="image">Hình ảnh:</label>
-        <input type="file" id="image" name="image" />
-    </div>
-    <div>
-        <label for="description">Mô tả:</label>
-        <textarea id="description" th:field="*{description}"></textarea>
-    </div>
-    <div>
-        <label for="allReviews">Số đánh giá:</label>
-        <input type="number" id="allReviews" th:field="*{allReviews}" />
-    </div>
-    <div>
-        <button type="submit">Lưu sản phẩm</button>
-    </div>
-</form>
+<header>
+    <h1>Tạo sản phẩm mới</h1>
+    <!-- Logout button -->
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
 
-<a href="/products">Quay lại danh sách sản phẩm</a>
+<main>
+    <form th:action="@{/products/create}" th:object="${product}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Tên sản phẩm:</label>
+            <input type="text" id="name" th:field="*{name}" />
+        </div>
+        <div class="form-group">
+            <label for="price">Giá:</label>
+            <input type="number" id="price" th:field="*{price}" step="0.01" />
+        </div>
+        <div class="form-group">
+            <label for="quantity">Số lượng:</label>
+            <input type="number" id="quantity" th:field="*{quantity}" />
+        </div>
+        <div class="form-group">
+            <label for="image">Hình ảnh:</label>
+            <input type="file" id="image" name="image" />
+        </div>
+        <div class="form-group">
+            <label for="description">Mô tả:</label>
+            <textarea id="description" th:field="*{description}"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="allReviews">Số đánh giá:</label>
+            <input type="number" id="allReviews" th:field="*{allReviews}" />
+        </div>
+        <div>
+            <button type="submit">Lưu sản phẩm</button>
+        </div>
+    </form>
+
+    <!-- Link to go back to the product list -->
+    <a href="/products">Quay lại danh sách sản phẩm</a>
+</main>
+
+<footer>
+    <p>&copy; 2025 Your Company. All rights reserved.</p>
+</footer>
+
 </body>
 </html>

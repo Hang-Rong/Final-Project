@@ -1,17 +1,129 @@
-<!-- src/main/resources/templates/user.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup with Flexbox for vertical alignment */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        /* Header Style */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative; /* Added to position logout button */
+        }
+
+        /* Logout button style */
+        header a.logout {
+            position: absolute;
+            right: 20px; /* Move the logout button to the right */
+            top: 20px; /* Align the button to the top */
+            padding: 10px 15px;
+            background-color: #f44336;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        header a.logout:hover {
+            background-color: #e53935; /* Darker shade when hovered */
+        }
+
+        /* Main section to center content */
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* Table Style */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Links Style */
+        a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+
+    </style>
 </head>
 <body>
-<h1>test userr</h1>
-<a href="products"> san pham</a>
 
-<a href="merchant/register">Dang ki cua hang</a>
-</tbody>
-</table>
+<header>
+    <h1>CHÀO MỪNG ĐẾN VỚI BA CON CHÓ</h1>
+    <!-- Logout Button -->
+    <a href="/logout" class="logout">Logout</a>
+</header>
+
+<main>
+    <div>
+        <a href="products">DANH SÁCH SẢN PHẨM</a>
+        <a href="merchant/register">ĐĂNG KÍ CỬA HÀNG</a>
+
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 All rights reserved.</p>
+</footer>
+
 </body>
 </html>

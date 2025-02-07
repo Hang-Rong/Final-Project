@@ -1,35 +1,151 @@
-<!-- src/main/resources/templates/user.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
+    <style>
+        /* General reset for margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Style */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Logout button positioned in the top-right corner */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #ff3333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+
+        /* Main content */
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* Back button */
+        .btn-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive table for smaller screens */
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>List of Users</h1>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>username</th>
-        <th>name</th>
-        <th>Address</th>
-        <th>Phone</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
+<header>
+    <h1>User List</h1>
+    <!-- Logout button -->
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
 
-    <tr th:each="customer : ${list}">
-        <td th:text="${customer.id}"></td>
-        <td th:text="${customer.appUser != null ? customer.appUser.username : 'No Username'}"></td>
-        <td th:text="${customer.name}"></td>
-        <td th:text="${customer.getAddress()}"></td>
-        <td th:text="${customer.getPhone()}"></td>
-    </tr>
-    </tbody>
-</table>
+<main>
+    <div class="container">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Tên người dùng</th>
+                <th>Địa chỉ</th>
+                <th>SDT</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer : ${list}">
+                <td th:text="${customer.id}"></td>
+                <td th:text="${customer.appUser != null ? customer.appUser.username : 'không có thông tin '}"></td>
+                <td th:text="${customer.name}"></td>
+                <td th:text="${customer.getAddress()}"></td>
+                <td th:text="${customer.getPhone()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- Back button -->
+        <a href="/admin" class="btn-back">BACK</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Your Company. 3CONCHO.</p>
+</footer>
+
 </body>
 </html>
