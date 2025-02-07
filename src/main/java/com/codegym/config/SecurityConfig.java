@@ -67,7 +67,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .formLogin(formLogin -> formLogin.successHandler(customSuccessHandle())) // Chỉ cần gọi formLogin một lần
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .permitAll()
+                        .successHandler(customSuccessHandle()))
                 .authorizeHttpRequests(author -> author
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
