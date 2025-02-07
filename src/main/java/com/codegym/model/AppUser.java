@@ -24,4 +24,8 @@ public class AppUser {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roll;
 
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
 }
