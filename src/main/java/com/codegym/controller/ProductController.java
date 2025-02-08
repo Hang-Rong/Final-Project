@@ -63,12 +63,12 @@ public class ProductController {
     }
 
 
-    // Hiển thị ds sp
+    // Hiển thị danh sách sản phẩm chưa bị xóa
     @GetMapping
     public ModelAndView listProducts(@RequestParam(value = "page", defaultValue = "0") int page,
-                                     @RequestParam(value = "size", defaultValue = "3") int size) {
+                                     @RequestParam(value = "size", defaultValue = "8") int size) {
         ModelAndView modelAndView = new ModelAndView("/product/list");
-        modelAndView.addObject("products", productService.findAll(PageRequest.of(page, size)));
+        modelAndView.addObject("products", productService.findByIsDeletedFalse(PageRequest.of(page, size)));
         return modelAndView;
     }
 
@@ -89,19 +89,24 @@ public class ProductController {
         return new ModelAndView("redirect:/products");
     }
 
-    // Xóa sp (Delete)
+    // Xóa mềm sản phẩm (đánh dấu isDeleted = true)
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteProduct(@PathVariable("id") Long id) {
-        productService.remove(id);
+    public ModelAndView softDeleteProduct(@PathVariable("id") Long id) {
+        Product product = productService.findById(id).orElse(null);
+        if (product != null) {
+            product.setDeleted(true);
+            productService.save(product);
+        }
         return new ModelAndView("redirect:/products");
     }
-// Search
+
+    // Tìm kiếm sản phẩm chưa bị xóa
     @GetMapping("/search")
     public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,
                                        @RequestParam(value = "page", defaultValue = "0") int page,
-                                       @RequestParam(value = "size", defaultValue = "5") int size) {
+                                       @RequestParam(value = "size", defaultValue = "8") int size) {
         ModelAndView modelAndView = new ModelAndView("/product/list");
-        modelAndView.addObject("products", productService.findAllByNameContaining(PageRequest.of(page, size), name));
+        modelAndView.addObject("products", productService.findAllByNameContainingAndIsDeletedFalse(PageRequest.of(page, size), name));
         modelAndView.addObject("searchName", name);
         return modelAndView;
     }

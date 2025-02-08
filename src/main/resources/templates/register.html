@@ -1,15 +1,166 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <style>
+        /* General reset for margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container for the form */
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 20px;
+        }
+
+        /* Header */
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Form Layout */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Label styling */
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        /* Input and Textarea styling */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Focus effect */
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        /* Submit Button */
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Link styling */
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            text-align: center;
+            display: block;
+            margin-top: 15px;
+        }
+
+        a:hover {
+            color: #45a049;
+        }
+    </style>
 </head>
 <body>
-<h1>Dang ky</h1>
-<form th:object="${user}" method="post">
-    <input th:field="*{username}" placeholder="name">
-    <input th:field="*{password}" placeholder="password">
-    <button>Dang ky</button>
-</form>
+<div class="container">
+    <h2>Đăng Ký</h2>
+    <form action="/register" method="post" enctype="multipart/form-data">
+
+        <!-- Personal Information -->
+        <h3>Thông Tin Cá Nhân</h3>
+
+        <div>
+            <label for="name">Họ và tên:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div>
+            <label for="phone">Số điện thoại:</label>
+            <input type="text" id="phone" name="phone" required>
+        </div>
+
+        <div>
+            <label for="birthday">Ngày sinh:</label>
+            <input type="date" id="birthday" name="birthday" required>
+        </div>
+
+        <div>
+            <label for="address">Địa chỉ:</label>
+            <input type="text" id="address" name="address" required>
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <!-- Account Information -->
+        <h3>Đăng Ký Tài Khoản</h3>
+
+        <div>
+            <label for="username">Tên Tài Khoản:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div>
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div>
+            <label for="confirmPassword">Xác nhận Mật khẩu:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
+
+        <button type="submit">Đăng ký</button>
+    </form>
+
+    <a href="/login">Đã có tài khoản? Đăng nhập ngay</a>
+</div>
 </body>
 </html>

@@ -1,7 +1,8 @@
-package com.codegym.service;
+package com.codegym.service.impl;
 
 import com.codegym.model.ComplaintForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,26 @@ public class EmailService {
         helper.setSubject(subject);
         helper.setText(content, true); // true để cho phép HTML
 
+        mailSender.send(message);
+    }
+
+    public void sendRegistrationEmail(String toEmail, String subject, String content) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        helper.setTo(toEmail);
+        helper.setSubject(subject);
+        helper.setText(content, true); // true để hỗ trợ HTML
+
+        mailSender.send(message);
+    }
+
+    // dùng cấp lại mk cho KH
+    public void sendEmail(String to, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(body);
         mailSender.send(message);
     }
 }

@@ -3,10 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup with Flexbox for vertical alignment */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        /* Main section to center content */
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* Links Style */
+        a {
+            margin: 10px;
+            padding: 10px;
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between; /* Tiêu đề bên trái, user-info bên phải */
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Khoảng cách giữa các phần tử */
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .user-info a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .change-password {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .change-password:hover {
+            background-color: #e68900;
+        }
+
+        .logout {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .logout:hover {
+            background-color: #b71c1c;
+        }
+
+
+    </style>
 </head>
 <body>
-<h1>test adm</h1>
-<a href="admin/listuser"> quan li nguoi dung</a>
-<a href="products/create"> Them san pham</a>
+
+<header>
+    <h1>ADMIN SITE</h1>
+    <div class="user-info">
+        <div class="user-info">
+            <span>Good day:
+                <span th:text="${#authentication.name}"></span>
+            </span>
+            <a href="/change-password" class="change-password">Đổi mật khẩu</a>
+            <a href="/logout" class="logout">Logout</a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div>
+        <a href="admin/listuser">Quản lý người dùng</a>
+        <a href="products">Trang cửa hàng</a>
+        <a href="admin/shoplist">DS cửa hàng</a>
+        <a href="products/create">Thêm sản phẩm</a>
+        <a href="admin/new-merchant">Thêm cửa hàng mới</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Admin Dashboard. All rights reserved.</p>
+</footer>
+
 </body>
 </html>

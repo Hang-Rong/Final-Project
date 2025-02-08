@@ -1,7 +1,7 @@
 package com.codegym.controller;
 
 import com.codegym.model.ComplaintForm;
-import com.codegym.service.EmailService;
+import com.codegym.service.impl.EmailService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ public class ComplaintController {
     @GetMapping("/complaint")
     public String showComplaintForm(Model model) {
         model.addAttribute("complaintForm", new ComplaintForm());
-        return "complaint_form"; // Tên file HTML trong templates/
+        return "complaint_form";
     }
 
     // Xử lý form khiếu nại
@@ -30,6 +30,6 @@ public class ComplaintController {
         } catch (MessagingException e) {
             model.addAttribute("message", "Lỗi gửi email: " + e.getMessage());
         }
-        return "complaint_form"; // Hiển thị lại form
+        return "complaint_form";
     }
 }

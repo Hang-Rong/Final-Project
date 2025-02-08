@@ -2,36 +2,125 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Merchant Registration</title>
+    <style>
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Form container */
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        form label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Back link */
+        form a {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #4CAF50;
+        }
+
+        /* Logout button style */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #ff3333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
 </head>
 <body>
-<h1>Merchant Registration</h1>
+
+<!-- Logout button positioned at the top right corner -->
+<a href="/logout" class="logout-btn">Logout</a>
+
+<h1>Đăng kí thông tin cửa hàng </h1>
 
 <!-- Form đăng ký Merchant -->
 <form action="/merchant/register" method="POST" enctype="multipart/form-data">
     <div>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" th:value="${merchantForm.name}" required/>
+        <input type="text" id="name" name="name" required/>
     </div>
 
     <div>
         <label for="phone">Phone:</label>
-        <input type="text" id="phone" name="phone" th:value="${merchantForm.phone}" required/>
+        <input type="text" id="phone" name="phone" required/>
     </div>
 
     <div>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:value="${merchantForm.email}" required/>
+        <input type="email" id="email" name="email" required/>
     </div>
 
     <div>
         <label for="address">Address:</label>
-        <input type="text" id="address" name="address" th:value="${merchantForm.address}" required/>
+        <input type="text" id="address" name="address" required/>
     </div>
 
     <div>
         <label for="slogan">Slogan:</label>
-        <input type="text" id="slogan" name="slogan" th:value="${merchantForm.slogan}" required/>
+        <input type="text" id="slogan" name="slogan" required/>
     </div>
 
     <div>
@@ -42,7 +131,9 @@
     <div>
         <button type="submit">Register</button>
     </div>
-    <a href="/user">Back to user</a>
+
+    <a href="/user">Back </a>
 </form>
+
 </body>
 </html>

@@ -1,14 +1,15 @@
-package com.codegym.service;
+package com.codegym.service.impl;
 
 import com.codegym.model.OrderDetail;
 import com.codegym.repository.IOrderDetailRepository;
+import com.codegym.service.IOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class OrderDetailService implements IOrderDetailService{
+public class OrderDetailService implements IOrderDetailService {
     @Autowired
     private IOrderDetailRepository iOrderDetailRepository;
 

@@ -21,9 +21,14 @@ public class AppUser {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private String levelOfAuthority;
+    @Enumerated(EnumType.STRING) // ✅ Lưu Enum dưới dạng String trong DB
+    private ROLENAME levelOfAuthority = ROLENAME.ROLE_USER;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roll;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id" , referencedColumnName = "id")
+    private Customer customer;
 
 }

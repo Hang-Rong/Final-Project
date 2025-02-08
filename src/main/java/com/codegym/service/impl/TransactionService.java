@@ -1,8 +1,9 @@
-package com.codegym.service;
+package com.codegym.service.impl;
 
 
 import com.codegym.model.Transaction;
 import com.codegym.repository.ITransactionRepository;
+import com.codegym.service.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
