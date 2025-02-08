@@ -47,6 +47,8 @@ public class CustomSuccessHandle extends SimpleUrlAuthenticationSuccessHandler {
         if (isDba(roles)) {
             // Nếu là tài khoản đăng nhập có role là DBA
             // thì điều hướng đến /dba
+            // Viết comment vẫn ok
+            // là sao nhỉ, gõ lúc này thì được nè
             url = "/dba";
         } else if (isAdmin(roles)) {
             // Nếu là tài khoản đăng nhập có role là ADMIN

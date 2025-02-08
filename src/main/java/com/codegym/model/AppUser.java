@@ -20,6 +20,8 @@ public class AppUser {
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String levelOfAuthority;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roll;
