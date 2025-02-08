@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán thành công</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1>Thanh toán thành công!</h1>
+
+<div>
+    <p>Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi. Dưới đây là thông tin đơn hàng của bạn:</p>
+
+    <div>
+        <p>Mã đơn hàng: <span th:text="${order.id}"></span></p>
+        <p>Tổng tiền: <span th:text="${totalPrice}"></span> VNĐ</p>
+        <p>Ngày đặt hàng: <span th:text="${order.orderDate}"></span></p>
+    </div>
+
+    <h2>Chi tiết đơn hàng:</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+            <th>Tổng</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderDetail : ${order.orderDetails}">
+            <td th:text="${orderDetail.product.name}"></td>
+            <td th:text="${orderDetail.quanity}"></td>
+            <td th:text="${orderDetail.product.price}"></td>
+            <td th:text="${orderDetail.product.price * orderDetail.quanity}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/" class="btn btn-primary">Quay lại trang chủ</a>
+</div>
+
+</body>
+</html>
