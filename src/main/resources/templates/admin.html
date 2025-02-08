@@ -20,15 +20,58 @@
             background-color: #f4f4f4;
         }
 
-        /* Main section to center content */
-        main {
-            flex-grow: 1;
+        .menu-container {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: white;
             padding: 20px;
+        }
+
+        .menu-item {
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient color */
+            border-radius: 10px;
+            margin: 10px;
+            width: 250px;
             text-align: center;
+            padding: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px); /* Hover effect */
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        .menu-item a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .menu-item a:hover {
+            color: #fdd835; /* Gold color when hovering on the link */
+        }
+
+        .menu-item i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #fff; /* White color for the icon */
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover i {
+            transform: scale(1.2); /* Icon grows when hovering */
+        }
+
+        /* Icon Style - Using Font Awesome */
+        .fas {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
         }
 
         /* Footer Style */
@@ -41,19 +84,6 @@
         }
 
         /* Links Style */
-        a {
-            margin: 10px;
-            padding: 10px;
-            text-decoration: none;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        a:hover {
-            background-color: #45a049;
-        }
 
         header {
             display: flex;
@@ -109,6 +139,7 @@
 
 
     </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -126,12 +157,27 @@
 </header>
 
 <main>
-    <div>
-        <a href="admin/listuser">Quản lý người dùng</a>
-        <a href="products">Trang cửa hàng</a>
-        <a href="admin/shoplist">DS cửa hàng</a>
-        <a href="products/create">Thêm sản phẩm</a>
-        <a href="admin/new-merchant">Thêm cửa hàng mới</a>
+    <div class="menu-container">
+        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="menu-item">
+            <i class="fas fa-users"></i>
+            <a href="admin/listuser">Quản lý người dùng</a>
+        </div>
+        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="menu-item">
+            <i class="fas fa-store"></i>
+            <a href="admin/new-merchant">Thêm cửa hàng mới</a>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-store-alt"></i>
+            <a href="products">Trang cửa hàng</a>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-store"></i>
+            <a href="admin/shoplist">DS cửa hàng</a>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-box-open"></i>
+            <a href="products/create">Thêm sản phẩm</a>
+        </div>
     </div>
 </main>
 

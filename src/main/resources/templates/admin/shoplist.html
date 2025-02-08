@@ -142,7 +142,9 @@
 <h1>Danh sách Cửa Hàng</h1>
 
 <!-- Nút thêm mới cửa hàng -->
-<a href="/admin/add-shop">Thêm Cửa Hàng</a>
+<div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+    <a href="admin/new-merchant">Thêm cửa hàng mới</a>
+</div>
 
 <table border="1">
     <thead>
@@ -166,7 +168,7 @@
         <td th:text="${shop.address}"></td>
         <td th:text="${shop.slogan}"></td>
         <td>
-            <img th:if="${shop.avatarImage != null}" th:src="@{/uploads/images/{image}(image=${shop.avatarImage})}" alt="Avatar" width="50">
+            <img th:if="${shop.avatarImage != null}" th:src="@{'/uploads/avatars/' + shop.avatarImage}" alt="Avatar" width="50">
             <span th:if="${shop.avatarImage == null}">Không có ảnh</span>
         </td>
         <td>
