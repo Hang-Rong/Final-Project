@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin Tết Theme</title>
     <style>
         /* Reset some default styles */
         * {
@@ -13,30 +13,85 @@
 
         /* Body setup with Flexbox for vertical alignment */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #f4f4f4;
+            background-color: #fff9f0;
         }
 
+        /* Header Style */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #ff6f00; /* Tết Orange */
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .user-info a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s ease-in-out;
+            color: white;
+        }
+
+        .change-password {
+            background-color: #f44336; /* Red for Tết */
+        }
+
+        .change-password:hover {
+            background-color: #d32f2f;
+        }
+
+        .logout {
+            background-color: #4caf50; /* Green for Tết */
+        }
+
+        .logout:hover {
+            background-color: #388e3c;
+        }
+
+        /* Menu container with festive styling */
         .menu-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 30px 20px;
         }
 
         .menu-item {
-            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient color */
-            border-radius: 10px;
-            margin: 10px;
-            width: 250px;
+            background: linear-gradient(135deg, #ff9800, #ff5722); /* Orange & Red gradient */
+            border-radius: 12px;
+            margin: 12px;
+            width: 270px;
             text-align: center;
-            padding: 15px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-in-out;
+            color: white;
         }
 
         .menu-item:hover {
@@ -54,18 +109,18 @@
         }
 
         .menu-item a:hover {
-            color: #fdd835; /* Gold color when hovering on the link */
+            color: #ffeb3b; /* Gold color when hovering on the link */
         }
 
         .menu-item i {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: #fff; /* White color for the icon */
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #fff;
             transition: transform 0.3s ease;
         }
 
         .menu-item:hover i {
-            transform: scale(1.2); /* Icon grows when hovering */
+            transform: scale(1.2);
         }
 
         /* Icon Style - Using Font Awesome */
@@ -79,64 +134,13 @@
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
         }
 
-        /* Links Style */
-
-        header {
-            display: flex;
-            justify-content: space-between; /* Tiêu đề bên trái, user-info bên phải */
-            align-items: center;
-            padding: 15px 20px;
-            background-color: #4CAF50;
-            color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px; /* Khoảng cách giữa các phần tử */
-        }
-
-        .username {
-            font-weight: bold;
+        footer p {
             font-size: 16px;
         }
-
-        .user-info a {
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: background 0.3s ease-in-out;
-        }
-
-        .change-password {
-            background-color: #ff9800;
-            color: white;
-        }
-
-        .change-password:hover {
-            background-color: #e68900;
-        }
-
-        .logout {
-            background-color: #d32f2f;
-            color: white;
-        }
-
-        .logout:hover {
-            background-color: #b71c1c;
-        }
-
 
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
@@ -144,15 +148,11 @@
 <body>
 
 <header>
-    <h1>ADMIN SITE</h1>
+    <h1>ADMIN TẾT SITE</h1>
     <div class="user-info">
-        <div class="user-info">
-            <span>Good day:
-                <span th:text="${#authentication.name}"></span>
-            </span>
-            <a href="/change-password" class="change-password">Đổi mật khẩu</a>
-            <a href="/logout" class="logout">Logout</a>
-        </div>
+        <span>Good day, <strong>Admin</strong>!</span>
+        <a href="/change-password" class="change-password">Đổi mật khẩu</a>
+        <a href="/logout" class="logout">Logout</a>
     </div>
 </header>
 
@@ -182,7 +182,7 @@
 </main>
 
 <footer>
-    <p>&copy; 2025 Admin Dashboard. All rights reserved.</p>
+    <p>&copy; 2025 Admin Dashboard. Chúc Mừng Năm Mới!</p>
 </footer>
 
 </body>
