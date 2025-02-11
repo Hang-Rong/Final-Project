@@ -43,11 +43,11 @@ public class CustomSuccessHandle extends SimpleUrlAuthenticationSuccessHandler {
             System.out.println("User is BANNED, logging out...");
             new SecurityContextLogoutHandler().logout(request, response, authentication);
             return "/login?error=banned";
-        } else if (roles.contains("ROLE_ADMIN")) {
+        } else if (isAdmin(roles)) {
             return "/admin";
-        } else if (roles.contains("ROLE_MERCHANT")) {
+        } else if (isMerchant(roles)) {
             return "/admin";
-        } else if (roles.contains("ROLE_USER")) {
+        } else if (isUser(roles)) {
             return "/user";
         } else {
             return "/accessDenied";
@@ -62,8 +62,8 @@ public class CustomSuccessHandle extends SimpleUrlAuthenticationSuccessHandler {
         return roles.contains("ROLE_ADMIN");
     }
 
-    private boolean isDba(List<String> roles) {
-        return roles.contains("ROLE_DBA");
+    private boolean isMerchant(List<String> roles) {
+        return roles.contains("ROLE_MERCHANT");
     }
 
     private boolean isBanned(List<String> roles) {
