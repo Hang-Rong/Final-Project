@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup with Flexbox for vertical alignment */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .menu-item {
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient color */
+            border-radius: 10px;
+            margin: 10px;
+            width: 250px;
+            text-align: center;
+            padding: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px); /* Hover effect */
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        .menu-item a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .menu-item a:hover {
+            color: #fdd835; /* Gold color when hovering on the link */
+        }
+
+        .menu-item i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #fff; /* White color for the icon */
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover i {
+            transform: scale(1.2); /* Icon grows when hovering */
+        }
+
+        /* Icon Style - Using Font Awesome */
+        .fas {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* Links Style */
+
+        header {
+            display: flex;
+            justify-content: space-between; /* Tiêu đề bên trái, user-info bên phải */
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Khoảng cách giữa các phần tử */
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .user-info a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .change-password {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .change-password:hover {
+            background-color: #e68900;
+        }
+
+        .logout {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .logout:hover {
+            background-color: #b71c1c;
+        }
+
+
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <h1>ADMIN SITE</h1>
+    <div class="user-info">
+        <div class="user-info">
+            <span>Good day:
+                <span th:text="${#authentication.name}"></span>
+            </span>
+            <a href="/change-password" class="change-password">Đổi mật khẩu</a>
+            <a href="/logout" class="logout">Logout</a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="menu-container">
+        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="menu-item">
+            <i class="fas fa-users"></i>
+            <a href="admin/listuser">Quản lý người dùng</a>
+        </div>
+        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="menu-item">
+            <i class="fas fa-store"></i>
+            <a href="admin/new-merchant">Thêm cửa hàng mới</a>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-store-alt"></i>
+            <a href="products">Trang cửa hàng</a>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-store"></i>
+            <a href="admin/shoplist">DS cửa hàng</a>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-box-open"></i>
+            <a href="products/create">Thêm sản phẩm</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Admin Dashboard. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

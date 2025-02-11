@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Cửa Hàng</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Style the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Header style */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Form container */
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Input fields and labels */
+        div {
+            margin-bottom: 15px;
+        }
+
+        /* Style for labels */
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Style for input fields */
+        input[type="text"],
+        input[type="email"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="file"] {
+            padding: 5px;
+        }
+
+        /* Style for the submit button */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for the "Back" link */
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 14px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        header {
+            display: flex;
+            justify-content: space-between; /* Tiêu đề bên trái, user-info bên phải */
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Khoảng cách giữa các phần tử */
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .user-info a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .change-password {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .change-password:hover {
+            background-color: #e68900;
+        }
+
+        .logout {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .logout:hover {
+            background-color: #b71c1c;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>ADMIN SITE</h1>
+    <div class="user-info">
+        <div class="user-info">
+            <span>Good day:
+                <span th:text="${#authentication.name}"></span>
+            </span>
+            <a href="/change-password" class="change-password">Đổi mật khẩu</a>
+            <a href="/logout" class="logout">Logout</a>
+        </div>
+    </div>
+</header>
+
+<h1>Thêm Mới Cửa Hàng</h1>
+
+<form action="/admin/new-merchant" method="POST" enctype="multipart/form-data" th:object="${merchantForm}">
+    <div>
+        <label for="name">Tên cửa hàng:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" required/>
+    </div>
+
+    <div>
+        <label for="phone">Số điện thoại:</label>
+        <input type="text" id="phone" name="phone" th:field="*{phone}" required/>
+    </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:field="*{email}" required/>
+    </div>
+
+    <div>
+        <label for="address">Địa chỉ:</label>
+        <input type="text" id="address" name="address" th:field="*{address}" required/>
+    </div>
+
+    <div>
+        <label for="slogan">Slogan:</label>
+        <input type="text" id="slogan" name="slogan" th:field="*{slogan}" required/>
+    </div>
+
+    <div>
+        <label for="avatarImage">Ảnh đại diện:</label>
+        <input type="file" id="avatarImage" name="avatarImage" accept="image/*"/>
+    </div>
+
+    <div>
+        <button type="submit">Thêm Cửa Hàng</button>
+    </div>
+
+    <a href="/admin">Quay lại</a>
+</form>
+
+</body>
+</html>

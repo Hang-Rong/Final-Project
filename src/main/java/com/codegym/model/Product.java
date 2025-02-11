@@ -15,9 +15,12 @@ public class Product {
     private Double price;
     private Integer quantity;
     @Lob
-    private String imageURL;
+    private String imageName;
     @Lob
     private String description;
     private Integer allReviews;
     private Integer allRating;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isDeleted = false;
 }

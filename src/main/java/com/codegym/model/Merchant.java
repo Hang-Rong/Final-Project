@@ -15,9 +15,12 @@ public class Merchant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(unique = true, nullable = false)
     private String phone;
+    @Column(unique = true, nullable = false)
     private String email;
-    private Date birthday;
     private String address;
+    @Column(name = "avatar_image")
     private String avatarImage;
+    private String slogan;
 }

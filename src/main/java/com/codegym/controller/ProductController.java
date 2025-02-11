@@ -8,8 +8,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -26,19 +32,43 @@ public class ProductController {
         return modelAndView;
     }
 //Lưu sp moi
+//    @PostMapping("/create")
+//    public ModelAndView saveProduct(@ModelAttribute("product") Product product) {
+//        productService.save(product);
+//        ModelAndView modelAndView = new ModelAndView("/product/create");
+//        modelAndView.addObject("product", new Product());
+//        return modelAndView;
+//    }
+
     @PostMapping("/create")
-    public ModelAndView saveProduct(@ModelAttribute("product") Product product) {
+    public ModelAndView saveProduct(@ModelAttribute("product") Product product,
+                                    @RequestParam("image") MultipartFile image) {
+        if (!image.isEmpty()) {
+            try {
+                String uploadDir = "uploads/images/";
+                Path path = Paths.get(uploadDir + image.getOriginalFilename());
+                Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+                product.setImageName(image.getOriginalFilename());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         productService.save(product);
+
         ModelAndView modelAndView = new ModelAndView("/product/create");
         modelAndView.addObject("product", new Product());
         return modelAndView;
     }
-    // Hiển thị ds sp
+
+
+    // Hiển thị danh sách sản phẩm chưa bị xóa
     @GetMapping
     public ModelAndView listProducts(@RequestParam(value = "page", defaultValue = "0") int page,
-                                     @RequestParam(value = "size", defaultValue = "3") int size) {
+                                     @RequestParam(value = "size", defaultValue = "8") int size) {
         ModelAndView modelAndView = new ModelAndView("/product/list");
-        modelAndView.addObject("products", productService.findAll(PageRequest.of(page, size)));
+        modelAndView.addObject("products", productService.findByIsDeletedFalse(PageRequest.of(page, size)));
         return modelAndView;
     }
 
@@ -59,19 +89,24 @@ public class ProductController {
         return new ModelAndView("redirect:/products");
     }
 
-    // Xóa sp (Delete)
+    // Xóa mềm sản phẩm (đánh dấu isDeleted = true)
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteProduct(@PathVariable("id") Long id) {
-        productService.remove(id);
+    public ModelAndView softDeleteProduct(@PathVariable("id") Long id) {
+        Product product = productService.findById(id).orElse(null);
+        if (product != null) {
+            product.setDeleted(true);
+            productService.save(product);
+        }
         return new ModelAndView("redirect:/products");
     }
-// Search
+
+    // Tìm kiếm sản phẩm chưa bị xóa
     @GetMapping("/search")
     public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,
                                        @RequestParam(value = "page", defaultValue = "0") int page,
-                                       @RequestParam(value = "size", defaultValue = "5") int size) {
+                                       @RequestParam(value = "size", defaultValue = "8") int size) {
         ModelAndView modelAndView = new ModelAndView("/product/list");
-        modelAndView.addObject("products", productService.findAllByNameContaining(PageRequest.of(page, size), name));
+        modelAndView.addObject("products", productService.findAllByNameContainingAndIsDeletedFalse(PageRequest.of(page, size), name));
         modelAndView.addObject("searchName", name);
         return modelAndView;
     }

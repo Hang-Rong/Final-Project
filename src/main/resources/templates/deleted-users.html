@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách khách hàng đã bị xóa</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .restore-button {
+            background-color: green;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Danh sách khách hàng đã bị xóa</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Tên người dùng</th>
+        <th>Địa chỉ</th>
+        <th>SDT</th>
+        <th>Khôi phục</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${deletedList}">
+        <td th:text="${customer.id}"></td>
+        <td th:text="${customer.appUser != null ? customer.appUser.username : 'Không có tài khoản'}"></td>
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.address}"></td>
+        <td th:text="${customer.phone}"></td>
+        <td>
+            <form action="/admin/restore" method="post">
+                <input type="hidden" name="userId" th:value="${customer.id}">
+                <button type="submit" class="restore-button">Khôi phục</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Back button -->
+<a href="/admin/listuser" class="btn-back">BACK</a>
+
+</body>
+</html>

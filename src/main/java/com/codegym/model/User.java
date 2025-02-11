@@ -20,6 +20,11 @@ public class User {
     private Date birthday;
     private String email;
     private String address;
-    private String avatarImage;
+//    private String avatarImage;
 
+
+    @OneToOne(mappedBy = "customer")
+    private AppUser appUser;
+
+    private boolean isDeleted = false;
 }

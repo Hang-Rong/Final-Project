@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/admin/setrole}" method="post">
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Set Role</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td>
+                <select name="role">
+                    <option value="ROLE_ADMIN">Admin</option>
+                    <option value="ROLE_MERCHANT">Merchant</option>
+                    <option value="ROLE_USER">User</option>
+                    <option value="ROLE_BANNED">Ban</option>
+                </select>
+            </td>
+            <td>
+                <input type="hidden" name="userId" th:value="${user.id}" />
+                <button type="submit">Update</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

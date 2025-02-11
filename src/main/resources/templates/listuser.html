@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        /* General reset for margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Style */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Logout button positioned in the top-right corner */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #ff3333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+
+        /* Main content */
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* Back button */
+        .btn-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive table for smaller screens */
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>User List</h1>
+    <!-- Logout button -->
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
+
+<main>
+    <div class="container">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Tên người dùng</th>
+                <th>Địa chỉ</th>
+                <th>SDT</th>
+                <th>Thay đổi quyền hạn</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer : ${list}">
+                <td th:text="${customer.id}"></td>
+                <td th:text="${customer.appUser != null ? customer.appUser.username : 'Không có tài khoản'}"></td>
+                <td th:text="${customer.name}"></td>
+                <td th:text="${customer.address}"></td>
+                <td th:text="${customer.phone}"></td>
+
+                <td>
+                    <form th:if="${customer.appUser != null and customer.appUser.username != currentUsername}"
+                          action="/admin/setrole" method="post">
+                        <input type="hidden" name="userId" th:value="${customer.appUser.id}">
+
+                        <label for="role">Chọn quyền:</label>
+                        <select id="role" name="role">
+                            <option value="ROLE_USER"
+                                    th:selected="${customer.appUser.levelOfAuthority.name() == 'ROLE_USER'}">
+                                User
+                            </option>
+                            <option value="ROLE_ADMIN"
+                                    th:selected="${customer.appUser.levelOfAuthority.name() == 'ROLE_ADMIN'}">
+                                Admin
+                            </option>
+                            <option value="ROLE_MERCHANT"
+                                    th:selected="${customer.appUser.levelOfAuthority.name() == 'ROLE_MERCHANT'}">
+                                Merchant
+                            </option>
+                            <option value="ROLE_BANNED"
+                                    th:selected="${customer.appUser.levelOfAuthority.name() == 'ROLE_BANNED'}">
+                                Banned
+                            </option>
+                        </select>
+
+                        <button type="submit">Cập nhật</button>
+                    </form>
+
+                    <span th:if="${customer.appUser != null and customer.appUser.username == currentUsername}">
+                       Không thể chỉnh sửa chính mình
+                    </span>
+                </td>
+
+                <td>
+                    <form action="/admin/delete-customer" method="post" style="display:inline;">
+                        <input type="hidden" name="customerId" th:value="${customer.id}">
+                        <button type="submit" onclick="return confirm('Bạn có chắc muốn ẩn khách hàng này không?')">Ẩn
+                            KH
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+        <!-- Back button -->
+        <a href="/admin" class="btn-back">BACK</a>
+        <a href="/admin/deleted-users" class="btn-back">DS KH đã ẩn</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Your Company. 3CONCHO.</p>
+</footer>
+
+</body>
+</html>
