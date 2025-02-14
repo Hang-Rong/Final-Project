@@ -20,4 +20,7 @@ public class Product {
     private String description;
     private Integer allReviews;
     private Integer allRating;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isDeleted = false;
 }

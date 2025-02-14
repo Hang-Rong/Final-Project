@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Khiếu Nại</title>
+</head>
+<body>
+<h2>Form Khiếu Nại</h2>
+
+<!-- Hiển thị thông báo -->
+<p th:if="${message}" th:text="${message}" style="color: green;"></p>
+
+<form action="/submitComplaint" method="post">
+    <label for="name">Họ và tên:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="subject">Chủ đề:</label>
+    <input type="text" id="subject" name="subject" required><br>
+
+    <label for="message">Nội dung:</label>
+    <textarea id="message" name="message" required></textarea><br>
+
+    <button type="submit">Gửi Khiếu Nại</button>
+</form>
+</body>
+</html>

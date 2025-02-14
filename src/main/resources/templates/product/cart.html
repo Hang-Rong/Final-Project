@@ -3,8 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        div {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        td input[type="text"] {
+            width: 50px;
+            text-align: center;
+        }
+
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        a {
+            text-decoration: none;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a[th\\:href="@{/shoppingcart/checkout}"] {
+            display: block;
+            width: 200px;
+            text-align: center;
+            background-color: #ffc107;
+            color: black;
+            padding: 10px;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
+
+        a[th\\:href="@{/shoppingcart/checkout}"]:hover {
+                                                    background-color: #e0a800;
+                                                }
+    </style>
 </head>
 <body>
+<div>
+<a th:href="@{/products}">Home</a>
+</div>
+<br>
 <div>
     <h1>Shopping Cart</h1>
     <form th:action="@{/shoppingcart/update}" th:method="POST">
@@ -28,7 +114,12 @@
                 <td th:text="${pr.product.price * pr.quantity}"></td>
             </tr>
         </table>
+        <br>
+        <br>
         <a th:href="@{/shoppingcart/checkout}">Checkout</a>
+        <br>
+        <br>
+
     </form>
 </div>
 <script>

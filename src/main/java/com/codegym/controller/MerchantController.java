@@ -2,26 +2,28 @@ package com.codegym.controller;
 
 import com.codegym.model.Merchant;
 import com.codegym.model.MerchantForm;
-import com.codegym.model.Product;
-import com.codegym.service.MerchantService;
+import com.codegym.service.impl.EmailService;
+import com.codegym.service.impl.MerchantService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 @Controller
 @RequestMapping("/merchant")
 public class MerchantController {
     @Autowired
     private MerchantService merchantService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/register")
     public ModelAndView registerForm() {
@@ -67,6 +69,25 @@ public class MerchantController {
         }
 
         merchantService.save(merchant);
+
+        // Nội dung email
+        String subject = "New Merchant Registration";
+        String content = "<h3>Thông tin đăng ký merchant:</h3>"
+                + "<p><b>Name:</b> " + merchant.getName() + "</p>"
+                + "<p><b>Phone:</b> " + merchant.getPhone() + "</p>"
+                + "<p><b>Email:</b> " + merchant.getEmail() + "</p>"
+                + "<p><b>Address:</b> " + merchant.getAddress() + "</p>"
+                + "<p><b>Slogan:</b> " + merchant.getSlogan() + "</p>";
+
+        if (merchant.getAvatarImage() != null) {
+            content += "<p><b>Avatar:</b> <a href='http://yourdomain.com/uploads/images/" + merchant.getAvatarImage() + "'>View Image</a></p>";
+        }
+
+        try {
+            emailService.sendRegistrationEmail("hangrongv25@gmail.com", subject, content);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
 
         ModelAndView mav = new ModelAndView("/merchant/home");
         mav.addObject("merchant", merchant);

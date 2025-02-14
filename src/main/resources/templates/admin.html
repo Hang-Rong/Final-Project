@@ -20,34 +20,6 @@
             background-color: #f4f4f4;
         }
 
-        /* Header Style */
-        header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 24px;
-            position: relative; /* Added to position logout button */
-        }
-
-        /* Logout button style */
-        header a.logout {
-            position: absolute;
-            right: 20px; /* Move the logout button to the right */
-            top: 20px; /* Align the button to the top */
-            padding: 10px 15px;
-            background-color: #f44336;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        header a.logout:hover {
-            background-color: #e53935; /* Darker shade when hovered */
-        }
-
         /* Main section to center content */
         main {
             flex-grow: 1;
@@ -83,22 +55,83 @@
             background-color: #45a049;
         }
 
+        header {
+            display: flex;
+            justify-content: space-between; /* Tiêu đề bên trái, user-info bên phải */
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Khoảng cách giữa các phần tử */
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .user-info a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .change-password {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .change-password:hover {
+            background-color: #e68900;
+        }
+
+        .logout {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .logout:hover {
+            background-color: #b71c1c;
+        }
+
+
     </style>
 </head>
 <body>
 
 <header>
-    <h1>ADMIN BA CON CHÓ</h1>
-
-    <!-- Logout Button positioned at the top-right -->
-    <a href="/logout" class="logout">Logout</a>
+    <h1>ADMIN SITE</h1>
+    <div class="user-info">
+        <div class="user-info">
+            <span>Good day:
+                <span th:text="${#authentication.name}"></span>
+            </span>
+            <a href="/change-password" class="change-password">Đổi mật khẩu</a>
+            <a href="/logout" class="logout">Logout</a>
+        </div>
+    </div>
 </header>
 
 <main>
-    <!-- Main content section with two links, centered -->
     <div>
         <a href="admin/listuser">Quản lý người dùng</a>
+        <a href="products">Trang cửa hàng</a>
+        <a href="admin/shoplist">DS cửa hàng</a>
         <a href="products/create">Thêm sản phẩm</a>
+        <a href="admin/new-merchant">Thêm cửa hàng mới</a>
     </div>
 </main>
 

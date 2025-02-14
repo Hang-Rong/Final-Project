@@ -125,7 +125,7 @@
             background-color: #45a049;
         }
 
-        /* Logout button style */
+
         .logout-btn {
             position: absolute;
             top: 20px;
@@ -137,19 +137,37 @@
             border-radius: 5px;
         }
 
+        .admin-btn {
+            position: absolute;
+            right: 140px;
+            top: 20px;
+            padding: 10px 15px;
+            background-color: #2c00ef;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
         .logout-btn:hover {
             background-color: #cc0000;
+        }
+
+        .admin-btn:hover {
+            background-color: #00f6f6;
         }
     </style>
 </head>
 <body>
-
-<h1>Danh sách sản phẩm</h1>
-
-<!-- Logout button positioned at the top right corner -->
-<a href="/logout" class="logout-btn">Logout</a>
-
-<!-- Search form -->
+<header>
+    <h1>Danh sách sản phẩm</h1>
+    <div>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <a href="/admin" class="admin-btn">Admin</a>
+    </div>
+</header>
+<br>
 <div class="search-container">
     <form action="/products/search" method="get">
         <input type="text" name="name" placeholder="Tìm kiếm sản phẩm...">
@@ -157,9 +175,10 @@
     </form>
 </div>
 
-<a href="/products/create" style="display:block; margin-bottom: 20px; padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Tạo sản phẩm mới</a>
+<div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+    <a href="/products/create" style="display:block; margin-bottom: 20px; padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Tạo sản phẩm mới</a>
+</div>
 
-<!-- Product display grid -->
 <div class="product-container">
     <div th:each="product : ${products}" class="product-box">
         <img th:src="@{/uploads/images/{image}(image=${product.imageName})}" alt="Hình ảnh sản phẩm">
@@ -173,10 +192,9 @@
     </div>
 </div>
 
-<!-- Pagination -->
 <div class="pagination">
-    <a th:href="@{/products?page=0&size=5}">Trang 1</a>
-    <a th:href="@{/products?page=1&size=5}">Trang 2</a>
+    <a th:href="@{/products?page=0&size=8}">Trang 1</a>
+    <a th:href="@{/products?page=1&size=8}">Trang 2</a>
 </div>
 
 </body>

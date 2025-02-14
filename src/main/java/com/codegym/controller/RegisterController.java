@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,8 +33,8 @@ public class RegisterController {
     private PasswordEncoder passwordEncoder;
 
 
-    @ModelAttribute
-    public Set<AppRole> getAppUser() {
+    @ModelAttribute("roles")
+    public Set<AppRole> getRoles() {
         AppRole appRole = appRoleService.findByName("ROLE_USER");
         Set<AppRole> appRoleSet = new HashSet<>();
         appRoleSet.add(appRole);
@@ -45,17 +42,23 @@ public class RegisterController {
     }
 
     @GetMapping
-    public String register(Model model){
+    public String registerForm(Model model) {
         model.addAttribute("user", new AppUser());
         return "register";
     }
 
     @PostMapping
-    public String register(AppUser user, String name, String phone, String email, String address, String avatarImage){
+    public String register(@ModelAttribute("user") AppUser user,
+                           @RequestParam("name") String name,
+                           @RequestParam("phone") String phone,
+                           @RequestParam("email") String email,
+                           @RequestParam("address") String address) {
 
-//        String encodedPassword = passwordEncoder.encode(user.getPassword());
-//        user.setPassword(encodedPassword);
+        // ✅ Mã hóa mật khẩu trước khi lưu
+        //String encodedPassword = passwordEncoder.encode(user.getPassword());
+        //user.setPassword(encodedPassword);
 
+        // ✅ Tạo Customer và lưu vào DB
         Customer customer = new Customer();
         customer.setName(name);
         customer.setPhone(phone);
@@ -63,11 +66,20 @@ public class RegisterController {
         customer.setAddress(address);
         customerService.save(customer);
 
+        // ✅ Gán customer vào AppUser
         user.setCustomer(customer);
 
-        user.setRoll(getAppUser());
+        // ✅ Gán quyền ROLE_USER cho AppUser
+        user.setRoll(getRoles());
+
+        // ✅ Set mặc định level_of_authority là "USER" dùng ENUM
+        user.setLevelOfAuthority(ROLENAME.valueOf(ROLENAME.ROLE_USER.name()));
+
+        // ✅ Lưu vào database
         appUserService.save(user);
 
-        return "redirect:/login"; 
+        System.out.println("Registered Successfully");
+
+        return "redirect:/login";
     }
 }

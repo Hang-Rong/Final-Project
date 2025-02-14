@@ -134,7 +134,7 @@
 <body>
 
 <header>
-    <h1>Ba Con Chó</h1>
+    <h1>Hold Sell Shop</h1>
     <p>Cái gì cũng bán</p>
 </header>
 
@@ -142,9 +142,13 @@
     <h2>Vui Lòng Đăng Nhập</h2>
 
     <!-- Hiển thị thông báo lỗi nếu có -->
-    <div class="error-message" th:if="${param.error}">
-        <p>Tài khoản hoặc mật khẩu không chính xác ! Vui lòng đăng nhập lại !</p>
-    </div>
+    <p th:if="${errorMessage}" class="error">
+        <span th:text="${errorMessage}"></span>
+    </p>
+    <p th:if="${message}" class="success-message">
+        <span th:text="${message}"></span>
+    </p>
+    <br>
 
     <form action="/login" method="post">
         <div>
@@ -161,12 +165,16 @@
         <div>
             <a href="register">Register</a>
         </div>
+        <div>
+            <a href="/forgot-password">Forgot Password?</a>
+        </div>
     </form>
 </div>
 
+
 <!-- Footer Section -->
 <footer>
-    <p>&copy; 2025 Ba Con Chó. All rights reserved.</p>
+    <p>&copy; 2025 Hold Sell Shop. All rights reserved.</p>
     <p><a href="/contact">Contact Us</a> | <a href="/privacy">Privacy Policy</a></p>
 </footer>
 
