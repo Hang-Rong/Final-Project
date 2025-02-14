@@ -11,7 +11,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,10 +30,8 @@ public class CustomSuccessHandle extends SimpleUrlAuthenticationSuccessHandler {
             System.out.println("Can't redirect");
             return;
         }
-
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
-
     // Kiểm tra vai trò và trả về đường dẫn điều hướng phù hợp
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -43,13 +40,14 @@ public class CustomSuccessHandle extends SimpleUrlAuthenticationSuccessHandler {
                 .collect(Collectors.toList());
 
         if (roles.contains("ROLE_BANNED")) {
-            // ❌ Không redirect nữa, chỉ ghi log
             System.out.println("User is BANNED, logging out...");
             new SecurityContextLogoutHandler().logout(request, response, authentication);
             return "/login?error=banned";
-        } else if (roles.contains("ROLE_ADMIN")) {
+        } else if (isAdmin(roles)) {
             return "/admin";
-        } else if (roles.contains("ROLE_USER")) {
+        } else if (isMerchant(roles)) {
+            return "/admin";
+        } else if (isUser(roles)) {
             return "/user";
         } else {
             return "/accessDenied";
@@ -64,8 +62,8 @@ public class CustomSuccessHandle extends SimpleUrlAuthenticationSuccessHandler {
         return roles.contains("ROLE_ADMIN");
     }
 
-    private boolean isDba(List<String> roles) {
-        return roles.contains("ROLE_DBA");
+    private boolean isMerchant(List<String> roles) {
+        return roles.contains("ROLE_MERCHANT");
     }
 
     private boolean isBanned(List<String> roles) {

@@ -2,7 +2,6 @@ package com.codegym.config;
 
 import com.codegym.controller.CustomAccessDeniedHandler;
 import com.codegym.controller.CustomSuccessHandle;
-import com.codegym.model.AppUser;
 import com.codegym.service.IAppRoleService;
 import com.codegym.service.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,10 +29,9 @@ public class SecurityConfig {
     @Autowired
     private IAppRoleService roleService;
 
-    // Password Encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10); // Sử dụng BCryptPasswordEncoder cho bảo mật
+        return new BCryptPasswordEncoder(10);
     }
 
     // Authentication Provider
@@ -47,39 +44,34 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
-    // Custom Success Handler
     @Bean
     public CustomSuccessHandle customSuccessHandle() {
         return new CustomSuccessHandle();
     }
 
-    // Custom Access Denied Handler
     @Bean
     public CustomAccessDeniedHandler customAccessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
 
-
-    // Security Filter Chain Configuration
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/login")
-                        .permitAll()
-                        .successHandler(customSuccessHandle())) // Xử lý đăng nhập thành công
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")) // Xóa session khi logout
-                .authorizeHttpRequests(authorize -> authorize
+                .loginPage("/login")
+                .permitAll()
+                .successHandler(customSuccessHandle()))
+                .authorizeHttpRequests(author -> author
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/register").permitAll()
 
-                        // 🚀 Chặn user có ROLE_BANNED ngay từ đầu
-                        .requestMatchers("/**").not().hasAuthority("ROLE_BANNED")
+                        // Các đường dẫn dành cho USER
+                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER","ROLE_MERCHANT")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN","MERCHANT")
+                        .requestMatchers("/products**").hasAnyRole("USER","ADMIN","MERCHANT")
+                        .requestMatchers("/products**", "/products/**").hasAnyRole("MERCHANT")
+
 
                         .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -90,14 +82,14 @@ public class SecurityConfig {
 
 
 
+
                         .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
+
                         .anyRequest().authenticated()
                 )
-                .exceptionHandling(customizer -> customizer.accessDeniedHandler(customAccessDeniedHandler())) // Xử lý truy cập bị từ chối
-                .csrf(csrf -> csrf.disable()); // Tắt CSRF nếu không cần thiết
+                .exceptionHandling(customizer -> customizer.accessDeniedHandler(customAccessDeniedHandler())) // Xử lý từ chối quyền truy cập
+                .csrf(csrf -> csrf.disable()); // Vô hiệu hóa CSRF nếu không cần thiết
 
         return http.build();
     }
-
-
 }
