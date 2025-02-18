@@ -34,27 +34,40 @@ public class ShoppingCartController {
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/ordernow/{id}", method = RequestMethod.GET)
-    public String ordernow(@PathVariable(value = "id") Long id, HttpSession session) {
+    public String ordernow(@PathVariable(value = "id") Long id, HttpSession session, ModelMap model) {
+
+        Optional<Product> productOpt = pm.findById(id);
+
+        if (!productOpt.isPresent()) {
+            return "/product/cart";
+        }
+
+        Product product = productOpt.get();
+        if (product.isOutOfStock()) {
+            model.addAttribute("message", "Sản phẩm này đã ngừng bán.");
+            return "/product/cart";
+
+        }
 
         if (session.getAttribute("cart") == null) {
-            List<Items> cart = new ArrayList<Items>(); // cart
-            Optional<Product> product = pm.findById(id);
-            cart.add(new Items(product.get(), 1));
+            List<Items> cart = new ArrayList<>();
+            cart.add(new Items(product, 1));
             session.setAttribute("cart", cart);
         } else {
             List<Items> cart = (List<Items>) session.getAttribute("cart");
-            // using method isExisting here
             int index = isExisting(id, session);
             if (index == -1)
-                cart.add(new Items(this.pm.findById(id).get(), 1));
+                cart.add(new Items(product, 1));
             else {
                 int quantity = cart.get(index).getQuantity() + 1;
                 cart.get(index).setQuantity(quantity);
             }
             session.setAttribute("cart", cart);
         }
+
         return "/product/cart";
     }
+
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/update", method = RequestMethod.POST)

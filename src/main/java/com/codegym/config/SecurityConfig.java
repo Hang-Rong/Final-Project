@@ -11,8 +11,10 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -56,36 +58,45 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+//        http.csrf(AbstractHttpConfigurer::disable)
+//                .formLogin(Customizer.withDefaults())
+//
+//                .authorizeHttpRequests(author -> author
+//                        .anyRequest().permitAll())      ;
+
         http
                 .formLogin(formLogin -> formLogin
-                .loginPage("/login")
-                .permitAll()
-                .successHandler(customSuccessHandle()))
+                        .loginPage("/login")
+                        .permitAll()
+                        .successHandler(customSuccessHandle()))
                 .authorizeHttpRequests(author -> author
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/register").permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/register").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/register").permitAll()
 
-                        // Các đường dẫn dành cho USER
-                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER","ROLE_MERCHANT")
-                        .requestMatchers("/admin/**").hasAnyRole("ADMIN","MERCHANT")
-                        .requestMatchers("/products**").hasAnyRole("USER","ADMIN","MERCHANT")
-                        .requestMatchers("/products**", "/products/**").hasAnyRole("MERCHANT")
-
-
-                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-
-                        .requestMatchers("/products**").hasAnyAuthority("ROLE_USER", "ROLE_MERCHANT")
-
-                        .requestMatchers("/products/**").hasRole("MERCHANT")
+                                // Các đường dẫn dành cho USER
+                                .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
+                                .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MERCHANT")
+                                .requestMatchers("/merchant/**").hasRole("MERCHANT")
+                                .requestMatchers("/products**").hasAnyRole("USER", "ADMIN", "MERCHANT")
+                                .requestMatchers("/products**", "/products/**").hasAnyRole("MERCHANT")
 
 
+                                .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
 
 
-                        .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
+//                        .requestMatchers("/products**").hasAnyAuthority("ROLE_USER", "ROLE_MERCHANT")
+////
+////                        .requestMatchers("/products/**").hasRole("MERCHANT")
+////
+////
+////
+////
+////                        .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
 
-                        .anyRequest().authenticated()
+                                .anyRequest().authenticated()
                 )
                 .exceptionHandling(customizer -> customizer.accessDeniedHandler(customAccessDeniedHandler())) // Xử lý từ chối quyền truy cập
                 .csrf(csrf -> csrf.disable()); // Vô hiệu hóa CSRF nếu không cần thiết

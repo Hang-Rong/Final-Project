@@ -1,7 +1,9 @@
 package com.codegym.controller;
 
+import com.codegym.model.Category;
 import com.codegym.model.Product;
 import com.codegym.repository.IProductRepository;
+import com.codegym.service.ICategoryService;
 import com.codegym.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/products")
@@ -24,21 +27,16 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
+    @Autowired
+    private ICategoryService categoryService;
 
     @GetMapping("/create")
     public ModelAndView showCreateForm() {
         ModelAndView modelAndView = new ModelAndView("/product/create");
         modelAndView.addObject("product", new Product());
+        modelAndView.addObject("categories", categoryService.findAll());
         return modelAndView;
     }
-//Lưu sp moi
-//    @PostMapping("/create")
-//    public ModelAndView saveProduct(@ModelAttribute("product") Product product) {
-//        productService.save(product);
-//        ModelAndView modelAndView = new ModelAndView("/product/create");
-//        modelAndView.addObject("product", new Product());
-//        return modelAndView;
-//    }
 
     @PostMapping("/create")
     public ModelAndView saveProduct(@ModelAttribute("product") Product product,
@@ -55,10 +53,18 @@ public class ProductController {
             }
         }
 
+
+        Long categoryId = product.getCategory().getId();
+        Category category = categoryService.findById(categoryId).orElse(null);
+        if (category != null) {
+            product.setCategory(category);
+        }
+
         productService.save(product);
 
         ModelAndView modelAndView = new ModelAndView("/product/create");
         modelAndView.addObject("product", new Product());
+        modelAndView.addObject("categories", categoryService.findAll());
         return modelAndView;
     }
 
@@ -100,7 +106,18 @@ public class ProductController {
         return new ModelAndView("redirect:/products");
     }
 
-    // Tìm kiếm sản phẩm chưa bị xóa
+
+    // ngưng bán sản pohẩm
+    @GetMapping("/toggle-outofstock/{id}")
+    public ModelAndView toggleOutOfStock(@PathVariable("id") Long id) {
+        Product product = productService.findById(id).orElse(null);
+        if (product != null) {
+            product.setOutOfStock(!product.isOutOfStock());
+            productService.save(product);
+        }
+        return new ModelAndView("redirect:/products");
+    }
+
     @GetMapping("/search")
     public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,
                                        @RequestParam(value = "page", defaultValue = "0") int page,
@@ -110,4 +127,10 @@ public class ProductController {
         modelAndView.addObject("searchName", name);
         return modelAndView;
     }
+
+
 }
+
+
+
+

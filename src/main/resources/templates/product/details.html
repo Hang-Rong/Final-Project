@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h1>Chi tiết sản phẩm</h1>
+    <a href="/products">Quay lại danh sách sản phẩm</a>
+</header>
+
+<div class="product-details">
+    <div class="product-image">
+        <!-- Sử dụng th:src để hiển thị đường dẫn hình ảnh -->
+        <img th:src="@{'/uploads/images/' + ${product.imageName}}" alt="Hình ảnh của ${product.name}">
+    </div>
+
+    <div class="product-info">
+        <!-- Hiển thị tên sản phẩm -->
+        <h2 th:text="${product.name}"></h2>
+
+        <!-- Hiển thị giá sản phẩm -->
+        <p><strong>Giá:</strong> <span th:text="${product.price}"></span> VND</p>
+
+        <!-- Hiển thị mô tả sản phẩm -->
+        <p><strong>Mô tả:</strong> <span th:text="${product.description}"></span></p>
+
+        <!-- Hiển thị danh mục sản phẩm -->
+        <p><strong>Danh mục:</strong> <span th:text="${product.category.name}"></span></p>
+
+        <!-- Kiểm tra trạng thái sản phẩm (đã xóa hay còn bán) -->
+        <p><strong>Trạng thái:</strong> <span th:text="${product.deleted ? 'Đã xóa' : 'Còn bán'}"></span></p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Shop - Tất cả quyền được bảo vệ</p>
+</footer>
+</body>
+</html>

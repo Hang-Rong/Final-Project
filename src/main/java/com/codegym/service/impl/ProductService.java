@@ -1,5 +1,6 @@
 package com.codegym.service.impl;
 
+import com.codegym.model.Category;
 import com.codegym.model.Product;
 import com.codegym.repository.IProductRepository;
 import com.codegym.service.IProductService;
@@ -56,4 +57,13 @@ public class ProductService implements IProductService {
         return iProductRepository.findAllByNameContainingAndIsDeletedFalse(name, pageable);
     }
 
+    @Override
+    public Iterable<Product> findByCategory(Category category) {
+        return iProductRepository.findByCategory(category);
+    }
+
+
+    public List<Product> findByIsOutOfStockTrue(Pageable pageable) {
+        return iProductRepository.findByIsOutOfStockTrue(pageable);
+    }
 }

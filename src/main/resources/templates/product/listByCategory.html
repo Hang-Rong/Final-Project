@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Sản phẩm theo danh mục</title>
+  <style>
+    /* Container cho danh sách sản phẩm */
+    .product-list {
+      display: flex;
+      flex-wrap: wrap; /* Để sản phẩm tự động xuống dòng khi không đủ không gian */
+      gap: 20px; /* Khoảng cách giữa các sản phẩm */
+      justify-content: space-between; /* Các sản phẩm được căn đều từ trái qua phải */
+    }
+
+    /* Ô sản phẩm */
+    .product-item {
+      width: 220px; /* Chiều rộng mỗi ô sản phẩm */
+      height: 350px; /* Chiều cao mỗi ô sản phẩm */
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Căn chỉnh các phần tử bên trong */
+      background-color: #f9f9f9;
+    }
+
+    /* Flexbox để sắp xếp hình ảnh và thông tin sản phẩm */
+    .product-details {
+      display: flex;
+      flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+      height: 100%;
+    }
+
+    /* Hình ảnh sản phẩm */
+    .product-item img {
+      width: 100%; /* Hình ảnh chiếm toàn bộ chiều rộng */
+      height: 66%; /* Hình ảnh chiếm 2/3 chiều cao của div */
+      object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+      border-radius: 8px;
+    }
+
+    /* Thông tin sản phẩm (tên, giá tiền) */
+    .product-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 10px;
+    }
+
+    .product-item h2 {
+      font-size: 16px;
+      margin: 5px 0;
+      font-weight: bold;
+    }
+
+    .product-item p {
+      font-size: 14px;
+      margin: 3px 0;
+      color: #333;
+    }
+
+    /* Liên kết quay lại danh mục */
+    .back-link {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 16px;
+      margin-top: 20px;
+      display: block;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+<h1>Sản phẩm trong danh mục: <span th:text="${category.name}"></span></h1>
+
+<!-- Danh sách sản phẩm -->
+<div class="product-list">
+  <li th:each="product : ${products}" class="product-item">
+    <div class="product-details">
+      <!-- Hình ảnh sản phẩm -->
+      <img th:src="@{'/uploads/images/' + ${product.imageName}}" alt="Hình ảnh sản phẩm" />
+
+      <!-- Thông tin sản phẩm -->
+      <div class="product-info">
+        <!-- Hiển thị tên sản phẩm -->
+        <h2 th:text="${product.name}"></h2>
+
+        <!-- Hiển thị giá sản phẩm -->
+        <p><strong>Giá: </strong><span th:text="${product.price}"></span> VND</p>
+
+        <!-- Hiển thị số lượng -->
+        <p><strong>Số lượng: </strong><span th:text="${product.quantity}"></span></p>
+      </div>
+
+      <div>
+        <a th:href="@{/product-details/{id}(id=${product.id})}">Chi tiết</a>
+
+
+
+      </div>
+
+    </div>
+  </li>
+</div>
+
+<!-- Liên kết quay lại danh mục -->
+<a class="back-link" href="/categories/list">Quay lại danh mục</a>
+</body>
+</html>

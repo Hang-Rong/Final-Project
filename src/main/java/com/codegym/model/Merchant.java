@@ -1,10 +1,12 @@
 package com.codegym.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "merchant")
@@ -20,7 +22,15 @@ public class Merchant {
     @Column(unique = true, nullable = false)
     private String email;
     private String address;
-    @Column(name = "avatar_image")
-    private String avatarImage;
     private String slogan;
+
+    @OneToOne(mappedBy = "merchant", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private AppUser appUser;
+
+    @OneToMany(mappedBy = "merchant", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Product> products;
+
+
 }

@@ -23,4 +23,19 @@ public class Product {
 
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isDeleted = false;
+
+    //trạng thái ngưng bán
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isOutOfStock = false;
+
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="merchant_id")
+    private Merchant merchant;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="category_id")
+    private Category category;
+
 }

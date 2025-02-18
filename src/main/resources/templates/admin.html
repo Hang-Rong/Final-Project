@@ -141,7 +141,6 @@
         footer p {
             font-size: 16px;
         }
-
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
@@ -158,6 +157,7 @@
 
 <main>
     <div class="menu-container">
+        <!-- Quản lý người dùng và Thêm cửa hàng mới - Chỉ hiển thị cho ADMIN -->
         <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="menu-item">
             <i class="fas fa-users"></i>
             <a href="admin/listuser">Quản lý người dùng</a>
@@ -176,10 +176,16 @@
         </div>
         <div class="menu-item">
             <i class="fas fa-box-open"></i>
-            <a href="products/create">Thêm sản phẩm</a>
+            <a href="categories/list">DS sản phẩm</a>
         </div>
-    </div>
+<!--        <a th:href="@{/merchant/home(id=${merchant.id})}">Profile Merchant</a>-->
+
+
+
+
+<!--    </div>-->
 </main>
+
 
 <footer>
     <p>&copy; 2025 Admin Dashboard. Chúc Mừng Năm Mới!</p>

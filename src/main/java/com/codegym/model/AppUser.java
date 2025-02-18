@@ -27,6 +27,11 @@ public class AppUser {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roll;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "merchant_id",unique=true)
+    private Merchant merchant;
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id" , referencedColumnName = "id")
     private Customer customer;

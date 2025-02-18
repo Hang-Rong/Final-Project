@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách danh mục</title>
+    <style>
+        /* Đặt font chung cho trang */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        /* Header */
+        header {
+            background-color: #ff6600; /* Màu cam */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #ff6600; /* Màu cam */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Container chứa danh mục */
+        .category-list-container {
+            display: flex;
+            flex-wrap: wrap; /* Cho phép các item xuống dòng khi không đủ chỗ */
+            gap: 20px; /* Khoảng cách giữa các item */
+            padding: 20px;
+            justify-content: flex-start; /* Canh các item từ trái qua phải */
+        }
+
+        /* Ô danh mục */
+        .category-item {
+            width: 200px; /* Mỗi item có chiều rộng cố định */
+            height: 200px; /* Chiều cao cố định */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ff6600; /* Màu cam */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-item:hover {
+            transform: scale(1.05); /* Hiệu ứng khi hover */
+        }
+
+        /* Liên kết trong ô danh mục */
+        .category-item a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .category-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Đảm bảo nội dung giữa header và footer có thể cuộn */
+        .main-content {
+            padding-bottom: 60px; /* Dự phòng cho footer */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Danh sách danh mục
+</header>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="category-list-container">
+        <div th:each="category : ${categories}" class="category-item">
+            <a th:href="@{/categories/products/{categoryId}(categoryId=${category.id})}" th:text="${category.name}"></a>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    &copy; 2025 Shop Online. All rights reserved.
+</footer>
+</body>
+</html>

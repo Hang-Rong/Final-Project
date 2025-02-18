@@ -1,5 +1,6 @@
 package com.codegym.service;
 
+import com.codegym.model.Category;
 import com.codegym.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,4 +13,5 @@ public interface IProductService extends IGeneralService<Product> {
     Page<Product> findAllByNameContaining(Pageable pageable, String name);
     List<Product> findByIsDeletedFalse(Pageable pageable);
     List<Product> findAllByNameContainingAndIsDeletedFalse(Pageable pageable, String name);
+    Iterable<Product> findByCategory(Category category);
 }

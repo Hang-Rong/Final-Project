@@ -1,5 +1,6 @@
 package com.codegym.repository;
 
+import com.codegym.model.Category;
 import com.codegym.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,4 +12,8 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findAllByNameContaining(Pageable pageable, String name);
     List<Product> findByIsDeletedFalse(Pageable pageable);
     List<Product> findAllByNameContainingAndIsDeletedFalse(String name, Pageable pageable);
+    Iterable<Product> findByCategory(Category category);
+
+    // Lấy các sản phẩm đã ngưng bán
+    List<Product> findByIsOutOfStockTrue(Pageable pageable);
 }

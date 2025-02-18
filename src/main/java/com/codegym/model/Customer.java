@@ -24,5 +24,9 @@ public class Customer {
     @OneToOne(mappedBy = "customer")
     private AppUser appUser;
 
+
+
+
     private boolean isDeleted = false;
+
 }

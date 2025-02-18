@@ -5,6 +5,8 @@ import com.codegym.service.IAppUserService;
 import com.codegym.service.ICustomerService;
 import com.codegym.service.IMerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -67,6 +69,12 @@ public class AdminController {
         return "redirect:/admin/listuser";
     }
 
+
+
+
+
+
+
     private void updateRolesBasedOnLevel(AppUser user) {
         user.getRoll().clear(); // Xóa quyền cũ
 
@@ -95,34 +103,33 @@ public class AdminController {
 
     @GetMapping("/new-merchant")
     public String showAddShopForm(Model model) {
-        model.addAttribute("merchantForm", new MerchantForm());
+        model.addAttribute("merchantForm", new Merchant());
         return "/admin/addshop";
     }
 
     // Xử lý thêm cửa hàng mới
     @PostMapping("/new-merchant")
-    public String addNewShop(@ModelAttribute MerchantForm merchantForm) {
-        Merchant merchant = new Merchant();
-        merchant.setName(merchantForm.getName());
-        merchant.setPhone(merchantForm.getPhone());
-        merchant.setEmail(merchantForm.getEmail());
-        merchant.setAddress(merchantForm.getAddress());
-        merchant.setSlogan(merchantForm.getSlogan());
+    public String addNewShop(@ModelAttribute Merchant merchant) {
+        merchant.setName(merchant.getName());
+        merchant.setPhone(merchant.getPhone());
+        merchant.setEmail(merchant.getEmail());
+        merchant.setAddress(merchant.getAddress());
+        merchant.setSlogan(merchant.getSlogan());
 
-        // Lưu ảnh nếu có
-        if (!merchantForm.getAvatarImage().isEmpty()) {
-            try {
-                String fileName = UUID.randomUUID().toString() + "_" + merchantForm.getAvatarImage().getOriginalFilename();
-                Path uploadPath = Paths.get("uploads/avatars");
-                if (!Files.exists(uploadPath)) {
-                    Files.createDirectories(uploadPath);
-                }
-                Files.copy(merchantForm.getAvatarImage().getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-                merchant.setAvatarImage(fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        // Lưu ảnh nếu có
+//        if (!merchant.getAvatarImage().isEmpty()) {
+//            try {
+//                String fileName = UUID.randomUUID().toString() + "_" + merchant.getAvatarImage().getOriginalFilename();
+//                Path uploadPath = Paths.get("uploads/avatars");
+//                if (!Files.exists(uploadPath)) {
+//                    Files.createDirectories(uploadPath);
+//                }
+//                Files.copy(merchantForm.getAvatarImage().getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+//                merchant.setAvatarImage(fileName);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         merchantService.save(merchant);
         return "redirect:/admin/shoplist";
