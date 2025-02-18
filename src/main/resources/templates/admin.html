@@ -1,160 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Tết Theme</title>
-    <style>
-        /* Reset some default styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Body setup with Flexbox for vertical alignment */
-        body {
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-color: #fff9f0;
-        }
-
-        /* Header Style */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: #ff6f00; /* Tết Orange */
-            color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .username {
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .user-info a {
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: background 0.3s ease-in-out;
-            color: white;
-        }
-
-        .change-password {
-            background-color: #f44336; /* Red for Tết */
-        }
-
-        .change-password:hover {
-            background-color: #d32f2f;
-        }
-
-        .logout {
-            background-color: #4caf50; /* Green for Tết */
-        }
-
-        .logout:hover {
-            background-color: #388e3c;
-        }
-
-        /* Menu container with festive styling */
-        .menu-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 30px 20px;
-        }
-
-        .menu-item {
-            background: linear-gradient(135deg, #ff9800, #ff5722); /* Orange & Red gradient */
-            border-radius: 12px;
-            margin: 12px;
-            width: 270px;
-            text-align: center;
-            padding: 20px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease-in-out;
-            color: white;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-5px); /* Hover effect */
-            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-        }
-
-        .menu-item a {
-            text-decoration: none;
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            display: block;
-            transition: color 0.3s ease;
-        }
-
-        .menu-item a:hover {
-            color: #ffeb3b; /* Gold color when hovering on the link */
-        }
-
-        .menu-item i {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #fff;
-            transition: transform 0.3s ease;
-        }
-
-        .menu-item:hover i {
-            transform: scale(1.2);
-        }
-
-        /* Icon Style - Using Font Awesome */
-        .fas {
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-        }
-
-        /* Footer Style */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 12px;
-            font-size: 14px;
-        }
-
-        footer p {
-            font-size: 16px;
-        }
-
-    </style>
+    <title>Admin</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/admincss.css"/>
 </head>
 <body>
 
-<header>
-    <h1>ADMIN TẾT SITE</h1>
-    <div class="user-info">
-        <span>Good day, <strong>Admin</strong>!</span>
-        <a href="/change-password" class="change-password">Đổi mật khẩu</a>
-        <a href="/logout" class="logout">Logout</a>
-    </div>
-</header>
+<div th:replace="~{fragments/header :: header}"></div>
 
 <main>
     <div class="menu-container">
@@ -181,9 +35,7 @@
     </div>
 </main>
 
-<footer>
-    <p>&copy; 2025 Admin Dashboard. Chúc Mừng Năm Mới!</p>
-</footer>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>
