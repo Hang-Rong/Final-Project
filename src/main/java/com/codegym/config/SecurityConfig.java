@@ -71,6 +71,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN","MERCHANT")
                         .requestMatchers("/products**").hasAnyRole("USER","ADMIN","MERCHANT")
                         .requestMatchers("/products**", "/products/**").hasAnyRole("MERCHANT")
+                        .requestMatchers("/merchant**", "/merchant/**").hasAnyRole("MERCHANT")
 
                         .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
 

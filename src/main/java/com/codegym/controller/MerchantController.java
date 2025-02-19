@@ -94,5 +94,12 @@ public class MerchantController {
         return mav;
     }
 
+    @GetMapping("/profile")
+    public ModelAndView profileForm() {
+        ModelAndView mav = new ModelAndView("/merchant/test");
+        mav.addObject("merchantForm", new MerchantForm());
+        return mav;
+    }
+
 
 }

@@ -20,6 +20,10 @@
             <i class="fas fa-store"></i>
             <a href="admin/new-merchant">Thêm cửa hàng mới</a>
         </div>
+        <div th:if="${#authorization.expression('hasRole(''MERCHANT'')')}" class="menu-item">
+            <i class="fas fa-store"></i>
+            <a href="merchant/profile">Profile merchant</a>
+        </div>
         <div class="menu-item">
             <i class="fas fa-store-alt"></i>
             <a href="products">Trang cửa hàng</a>
