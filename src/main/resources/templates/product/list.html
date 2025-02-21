@@ -188,12 +188,12 @@
         <p th:text="${product.description}"></p>
 
         <p>
-            <!-- Hiển thị trạng thái sản phẩm -->
+
             <span th:if="${product.isOutOfStock}" class="badge bg-secondary">Ngưng bán</span>
             <span th:if="${!product.isOutOfStock}" class="badge bg-success">Đang bán</span>
         </p>
 
-        <!-- Thêm các hành động với sản phẩm -->
+
         <a th:href="@{/products/toggle-outofstock/{id}(id=${product.id})}" class="btn ${product.isOutOfStock ? 'btn-success' : 'btn-warning'}">
             <span th:if="${product.isOutOfStock}">Bán lại</span>
             <span th:if="${!product.isOutOfStock}">Ngưng bán</span>
@@ -201,7 +201,10 @@
 
         <a th:href="@{/products/edit/{id}(id=${product.id})}">Chỉnh sửa</a>
         <a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
-        <a th:if="${!product.isOutOfStock}" href="#" onclick="orderNow(${product.id}, ${product.isOutOfStock})" class="btn">Order</a>
+        <a th:href="@{/shoppingcart/ordernow/{id}(id=${product.id})}">Order</a>
+
+
+
 
 
     </div>

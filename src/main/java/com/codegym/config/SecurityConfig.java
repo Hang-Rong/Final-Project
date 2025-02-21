@@ -75,28 +75,17 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/register").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/register").permitAll()
 
-                                // Các đường dẫn dành cho USER
-                                .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
-                                .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MERCHANT")
-                                .requestMatchers("/merchant/**").hasRole("MERCHANT")
-                                .requestMatchers("/products**").hasAnyRole("USER", "ADMIN", "MERCHANT")
-                                .requestMatchers("/products**", "/products/**").hasAnyRole("MERCHANT")
 
+                        // Các đường dẫn dành cho USER
+                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER","ROLE_MERCHANT")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN","MERCHANT")
+                        .requestMatchers("/products**").hasAnyRole("USER","ADMIN","MERCHANT")
+                        .requestMatchers("/products**", "/products/**").hasAnyRole("MERCHANT")
+                        .requestMatchers("/merchant**", "/merchant/**").hasAnyRole("MERCHANT")
 
-                                .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
 
-
-//                        .requestMatchers("/products**").hasAnyAuthority("ROLE_USER", "ROLE_MERCHANT")
-////
-////                        .requestMatchers("/products/**").hasRole("MERCHANT")
-////
-////
-////
-////
-////                        .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
-
-                                .anyRequest().authenticated()
+                        .anyRequest().authenticated()
                 )
                 .exceptionHandling(customizer -> customizer.accessDeniedHandler(customAccessDeniedHandler())) // Xử lý từ chối quyền truy cập
                 .csrf(csrf -> csrf.disable()); // Vô hiệu hóa CSRF nếu không cần thiết

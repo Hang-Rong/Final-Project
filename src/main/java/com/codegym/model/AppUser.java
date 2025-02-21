@@ -1,5 +1,9 @@
 package com.codegym.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +25,7 @@ public class AppUser {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING) // ✅ Lưu Enum dưới dạng String trong DB
+    @Enumerated(EnumType.STRING) //
     private ROLENAME levelOfAuthority = ROLENAME.ROLE_USER;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -29,11 +33,13 @@ public class AppUser {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "merchant_id",unique=true)
+
     private Merchant merchant;
 
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id" , referencedColumnName = "id")
+    @JsonManagedReference
     private Customer customer;
 
 }

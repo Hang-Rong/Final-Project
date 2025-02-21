@@ -1,12 +1,16 @@
 package com.codegym.controller;
 
 import com.codegym.model.Category;
+import com.codegym.model.Merchant;
 import com.codegym.model.Product;
 import com.codegym.repository.IProductRepository;
 import com.codegym.service.ICategoryService;
 import com.codegym.service.IProductService;
+import com.codegym.service.impl.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +33,8 @@ public class ProductController {
     private IProductService productService;
     @Autowired
     private ICategoryService categoryService;
+    @Autowired
+    private MerchantService merchantService;
 
     @GetMapping("/create")
     public ModelAndView showCreateForm() {
@@ -59,6 +65,7 @@ public class ProductController {
         if (category != null) {
             product.setCategory(category);
         }
+
 
         productService.save(product);
 

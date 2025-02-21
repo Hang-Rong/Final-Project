@@ -35,4 +35,6 @@ public class MerchantService implements IMerchantService {
     public void remove(Long id) {
         merchantRepository.deleteById(id);
     }
+
+
 }
