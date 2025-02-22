@@ -6,6 +6,8 @@ import com.codegym.repository.IAppRoleRepo;
 import com.codegym.repository.IAppUserRepo;
 import com.codegym.service.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -57,4 +59,15 @@ public class AppUserService implements IAppUserService, UserDetailsService {
                 .map(UserPrinciple::build)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
+
+    public Optional<AppUser> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            return appUserRepo.findByUsername(username);
+        }
+        return Optional.empty(); // Trả về Optional.empty nếu không tìm thấy người dùng
+    }
+
+
 }

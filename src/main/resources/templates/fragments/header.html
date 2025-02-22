@@ -1,0 +1,12 @@
+<header th:fragment="header">
+    <div class="user-info">
+        <h1>ADMIN SITE</h1>
+        <div class="user-info">
+            <span>Good day:
+                <span th:text="${#authentication.name}"></span>
+            </span>
+            <a href="/change-password" class="change-password">Đổi mật khẩu</a>
+            <a href="/logout" class="logout">Logout</a>
+        </div>
+    </div>
+</header>

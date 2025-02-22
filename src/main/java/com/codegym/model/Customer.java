@@ -1,5 +1,7 @@
 package com.codegym.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -22,6 +24,7 @@ public class Customer {
 
 
     @OneToOne(mappedBy = "customer")
+    @JsonBackReference
     private AppUser appUser;
 
 

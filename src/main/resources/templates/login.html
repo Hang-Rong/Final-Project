@@ -13,27 +13,21 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* Đảm bảo body chiếm toàn bộ chiều cao màn hình */
+            height: 100vh;
         }
 
-        header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 20px;
+        .left-section {
+            flex: 1;
+            background: url('https://www.dispatch.com/gcdn/presto/2022/11/02/NCOD/6447d5b8-b95f-4c00-809f-0293368f3c2d-News-_CEB_BJs_Wholesale_Opening_01.jpg?crop=3592,2694,x480,y0') no-repeat center center/cover;
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 36px;
-        }
-
-        header p {
-            margin: 5px;
-            font-size: 18px;
+        .right-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
         }
 
         .login-container {
@@ -43,7 +37,6 @@
             padding: 40px;
             width: 100%;
             max-width: 400px;
-            margin: 40px auto;
             text-align: center;
         }
 
@@ -52,130 +45,62 @@
             color: #333;
         }
 
-        .login-container form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .login-container label {
-            text-align: left;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #555;
-        }
-
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
+        .login-container input {
             padding: 10px;
-            margin-bottom: 20px;
+            width: 100%;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 14px;
-            width: 100%;
         }
 
         .login-container button {
             padding: 10px;
-            background-color: #4CAF50;
+            width: 100%;
+            background-color: #007bff;
             color: white;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
         .login-container button:hover {
-            background-color: #45a049;
+            background-color: #0056b3;
         }
-
-        .login-container a {
-            margin-top: 15px;
-            color: #4CAF50;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .login-container a:hover {
-            text-decoration: underline;
-        }
-
-        .login-container div {
-            margin-bottom: 15px;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        /* Footer Style */
         footer {
+            width: 100%;
             background-color: #333;
             color: white;
-            padding: 20px 0;
             text-align: center;
-            font-size: 14px;
-            margin-top: auto; /* Đảm bảo footer luôn ở cuối */
+            padding: 20px 0;
+            position: absolute;
+            bottom: 0;
         }
 
-        footer a {
-            color: #4CAF50;
-            text-decoration: none;
+        footer section {
+            margin-top: 10px;
         }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
 <body>
-
-<header>
-    <h1>Hold Sell Shop</h1>
-    <p>Cái gì cũng bán</p>
-</header>
-
-<div class="login-container">
-    <h2>Vui Lòng Đăng Nhập</h2>
-
-    <!-- Hiển thị thông báo lỗi nếu có -->
-    <p th:if="${errorMessage}" class="error">
-        <span th:text="${errorMessage}"></span>
-    </p>
-    <p th:if="${message}" class="success-message">
-        <span th:text="${message}"></span>
-    </p>
-    <br>
-
-    <form action="/login" method="post">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-        </div>
-        <div>
-            <button type="submit">Login</button>
-        </div>
-        <div>
-            <a href="register">Register</a>
-        </div>
-        <div>
-            <a href="/forgot-password">Forgot Password?</a>
-        </div>
-    </form>
+<div class="left-section"></div>
+<div class="right-section">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="/login" method="post">
+            <input type="text" name="username" placeholder="Username or Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Log In</button>
+        </form>
+        <br>
+        <p><a href="/forgot-password">Lost your password?</a></p>
+    </div>
 </div>
 
-
-<!-- Footer Section -->
 <footer>
     <p>&copy; 2025 Hold Sell Shop. All rights reserved.</p>
-    <p><a href="/contact">Contact Us</a> | <a href="/privacy">Privacy Policy</a></p>
+    <section>
+        <a href="/complaint">Contact us</a>
+    </section>
 </footer>
 
 </body>

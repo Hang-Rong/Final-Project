@@ -1,113 +1,125 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sản phẩm theo danh mục</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/admincss.css"/>
   <style>
-    /* Container cho danh sách sản phẩm */
-    .product-list {
-      display: flex;
-      flex-wrap: wrap; /* Để sản phẩm tự động xuống dòng khi không đủ không gian */
-      gap: 20px; /* Khoảng cách giữa các sản phẩm */
-      justify-content: space-between; /* Các sản phẩm được căn đều từ trái qua phải */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      padding: 20px;
     }
 
-    /* Ô sản phẩm */
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #007bff;
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
     .product-item {
-      width: 220px; /* Chiều rộng mỗi ô sản phẩm */
-      height: 350px; /* Chiều cao mỗi ô sản phẩm */
+      width: 220px;
+      background: white;
       border: 1px solid #ddd;
       border-radius: 8px;
       padding: 10px;
       text-align: center;
-      box-sizing: border-box;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* Căn chỉnh các phần tử bên trong */
-      background-color: #f9f9f9;
+      justify-content: space-between;
     }
 
-    /* Flexbox để sắp xếp hình ảnh và thông tin sản phẩm */
-    .product-details {
-      display: flex;
-      flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
-      height: 100%;
-    }
-
-    /* Hình ảnh sản phẩm */
     .product-item img {
-      width: 100%; /* Hình ảnh chiếm toàn bộ chiều rộng */
-      height: 66%; /* Hình ảnh chiếm 2/3 chiều cao của div */
-      object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
       border-radius: 8px;
     }
 
-    /* Thông tin sản phẩm (tên, giá tiền) */
-    .product-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding-top: 10px;
-    }
-
-    .product-item h2 {
+    .product-info h2 {
       font-size: 16px;
       margin: 5px 0;
-      font-weight: bold;
-    }
-
-    .product-item p {
-      font-size: 14px;
-      margin: 3px 0;
       color: #333;
     }
 
-    /* Liên kết quay lại danh mục */
-    .back-link {
-      text-decoration: none;
-      color: #007bff;
-      font-size: 16px;
-      margin-top: 20px;
+    .product-info p {
+      font-size: 14px;
+      margin: 3px 0;
+    }
+
+    .product-actions a {
       display: block;
+      margin-top: 5px;
+      padding: 5px;
+      text-decoration: none;
+      border-radius: 5px;
       text-align: center;
     }
 
+    .btn-success { background-color: #28a745; color: white; }
+    .btn-warning { background-color: #ffc107; color: black; }
+    .btn-danger { background-color: #dc3545; color: white; }
+    .btn-primary { background-color: #007bff; color: white; }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
-<h1>Sản phẩm trong danh mục: <span th:text="${category.name}"></span></h1>
+<div th:replace="~{fragments/userheaded :: header}"></div>
+<div class="container">
+  <h1>Sản phẩm trong danh mục: <span th:text="${category.name}"></span></h1>
 
-<!-- Danh sách sản phẩm -->
-<div class="product-list">
-  <li th:each="product : ${products}" class="product-item">
-    <div class="product-details">
-      <!-- Hình ảnh sản phẩm -->
+  <div class="product-list">
+    <div th:each="product : ${products}" class="product-item">
       <img th:src="@{'/uploads/images/' + ${product.imageName}}" alt="Hình ảnh sản phẩm" />
-
-      <!-- Thông tin sản phẩm -->
       <div class="product-info">
-        <!-- Hiển thị tên sản phẩm -->
         <h2 th:text="${product.name}"></h2>
-
-        <!-- Hiển thị giá sản phẩm -->
-        <p><strong>Giá: </strong><span th:text="${product.price}"></span> VND</p>
-
-        <!-- Hiển thị số lượng -->
-        <p><strong>Số lượng: </strong><span th:text="${product.quantity}"></span></p>
+        <p><strong>Giá:</strong> <span th:text="${product.price}"></span> VND</p>
+        <p><strong>Số lượng:</strong> <span th:text="${product.quantity}"></span></p>
+        <p>
+          <span th:if="${product.isOutOfStock}" class="badge bg-secondary">Ngưng bán</span>
+          <span th:if="${!product.isOutOfStock}" class="badge bg-success">Đang bán</span>
+        </p>
       </div>
-
-      <div>
-        <a th:href="@{/product-details/{id}(id=${product.id})}">Chi tiết</a>
-
-
-
+      <div class="product-actions">
+        <a th:href="@{/product-details/{id}(id=${product.id})}" class="btn btn-primary">Chi tiết</a>
+        <a th:href="@{/products/toggle-outofstock/{id}(id=${product.id})}"
+           class="btn" th:classappend="${product.isOutOfStock ? 'btn-success' : 'btn-warning'}">
+          <span th:if="${product.isOutOfStock}">Bán lại</span>
+          <span th:if="${!product.isOutOfStock}">Ngưng bán</span>
+        </a>
+        <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-primary">Chỉnh sửa</a>
+        <a th:href="@{/products/delete/{id}(id=${product.id})}"
+           onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"
+           class="btn btn-danger">Xóa</a>
+        <a th:href="@{/shoppingcart/ordernow/{id}(id=${product.id})}" class="btn btn-success">Order</a>
       </div>
-
     </div>
-  </li>
+  </div>
 </div>
 
-<!-- Liên kết quay lại danh mục -->
 <a class="back-link" href="/categories/list">Quay lại danh mục</a>
+<div th:replace="~{fragments/userFooter :: footer}"></div>
 </body>
 </html>

@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết sản phẩm</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/productsDetail.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/admincss.css"/>
 </head>
 <body>
-<header>
-    <h1>Chi tiết sản phẩm</h1>
-    <a href="/products">Quay lại danh sách sản phẩm</a>
-</header>
+<div th:replace="~{fragments/userheaded :: header}"></div>
+
+<a href="/categories/list">Back</a>
 
 <div class="product-details">
     <div class="product-image">
@@ -77,8 +78,6 @@
     <button type="submit">Gửi đánh giá</button>
 </form>
 
-<footer>
-    <p>&copy; 2025 Shop - Tất cả quyền được bảo vệ</p>
-</footer>
+<div th:replace="~{fragments/userFooter :: footer}"></div>
 </body>
 </html>

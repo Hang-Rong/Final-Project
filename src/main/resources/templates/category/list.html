@@ -11,26 +11,6 @@
             background-color: #f8f8f8;
         }
 
-        /* Header */
-        header {
-            background-color: #ff6600; /* Màu cam */
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #ff6600; /* Màu cam */
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-
         /* Container chứa danh mục */
         .category-list-container {
             display: flex;
@@ -77,12 +57,12 @@
             padding-bottom: 60px; /* Dự phòng cho footer */
         }
     </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/admincss.css"/>
 </head>
 <body>
 
-<header>
-    Danh sách danh mục
-</header>
+<div th:replace="~{fragments/userheaded :: header}"></div>
 
 <!-- Main Content -->
 <div class="main-content">
@@ -94,8 +74,6 @@
 </div>
 
 <!-- Footer -->
-<footer>
-    &copy; 2025 Shop Online. All rights reserved.
-</footer>
+<div th:replace="~{fragments/userFooter :: footer}"></div>
 </body>
 </html>
