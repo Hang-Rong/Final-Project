@@ -33,8 +33,49 @@
 
         <!-- Kiểm tra trạng thái sản phẩm (đã xóa hay còn bán) -->
         <p><strong>Trạng thái:</strong> <span th:text="${product.deleted ? 'Đã xóa' : 'Còn bán'}"></span></p>
+
+        <p><strong>Số lượt đánh giá:</strong> <span th:text="${product.allReviews}">0</span></p>
+        <p><strong>Điểm trung bình:</strong> <span th:text="${product.allRating}">0</span> sao</p>
     </div>
 </div>
+
+<h2>Đánh giá sản phẩm</h2>
+
+<!-- Hiển thị điểm trung bình -->
+<div th:if="${product.allReviews > 0}">
+    <p><strong>Điểm trung bình:</strong>
+        <span th:text="${product.allRating / product.allReviews}"></span>/5 ⭐
+        (<span th:text="${product.allReviews}"></span> lượt đánh giá)
+    </p>
+</div>
+
+<!-- Hiển thị các đánh giá -->
+<div th:if="${reviews}">
+    <ul>
+        <li th:each="review : ${reviews}" th:text="${review}"></li>
+    </ul>
+</div>
+
+<!-- Form nhập đánh giá -->
+<form th:action="@{/reviews/review/{productId}(productId=${product.id})}" method="post">
+    <h3>Gửi đánh giá của bạn</h3>
+
+    <label for="rating">Chấm điểm (1-5):</label>
+    <select id="rating" name="rating">
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐</option>
+        <option value="3">3 ⭐</option>
+        <option value="4">4 ⭐</option>
+        <option value="5">5 ⭐</option>
+    </select>
+    <br>
+
+    <label for="comment">Bình luận:</label>
+    <textarea id="comment" name="comment" rows="4" required></textarea>
+    <br>
+
+    <button type="submit">Gửi đánh giá</button>
+</form>
 
 <footer>
     <p>&copy; 2025 Shop - Tất cả quyền được bảo vệ</p>

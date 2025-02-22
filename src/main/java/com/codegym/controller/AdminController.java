@@ -138,7 +138,7 @@ public class AdminController {
     @GetMapping("/shoplist")
     public String shopList(Model model) {
         model.addAttribute("shopList", merchantService.findAll());
-        return "/admin/shoplist";
+        return "admin/shoplist";
     }
 
 }

@@ -201,7 +201,8 @@
 
         <a th:href="@{/products/edit/{id}(id=${product.id})}">Chỉnh sửa</a>
         <a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
-        <a th:if="${!product.isOutOfStock}" href="#" onclick="orderNow(${product.id}, ${product.isOutOfStock})" class="btn">Order</a>
+        <!-- <a th:if="${!product.isOutOfStock}" href="#" onclick="orderNow(${product.id}, ${product.isOutOfStock})" class="btn">Order</a> -->
+        <a th:href="@{/shoppingcart/ordernow/{id}(id=${product.id})}">Order</a>
 
 
     </div>

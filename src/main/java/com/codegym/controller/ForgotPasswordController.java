@@ -13,7 +13,7 @@ import java.security.SecureRandom;
 import java.util.Optional;
 
 
-@Controller
+@Controller("/password")
 public class ForgotPasswordController {
 
     @Autowired

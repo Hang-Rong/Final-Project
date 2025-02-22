@@ -85,16 +85,11 @@ public class SecurityConfig {
 
                                 .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-
-
 //                        .requestMatchers("/products**").hasAnyAuthority("ROLE_USER", "ROLE_MERCHANT")
 ////
 ////                        .requestMatchers("/products/**").hasRole("MERCHANT")
 ////
-////
-////
-////
-////                        .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
+                                 .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
 
                                 .anyRequest().authenticated()
                 )

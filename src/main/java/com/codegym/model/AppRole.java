@@ -1,8 +1,12 @@
 package com.codegym.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Set;
 
 
 @Entity
@@ -28,4 +32,5 @@ public class AppRole implements GrantedAuthority {
     public AppRole(String name) {
         this.name = name;
     }
+
 }

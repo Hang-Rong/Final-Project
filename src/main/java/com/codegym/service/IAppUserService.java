@@ -8,5 +8,4 @@ public interface IAppUserService extends IGeneralService<AppUser> {
     void setUserRole(AppUser user);
     Optional<AppUser> findById(Long id);
     Optional<AppUser> findByUsername(String username);
-
 }

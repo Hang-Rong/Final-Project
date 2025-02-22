@@ -43,11 +43,6 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Page<Product> findAllByNameContaining(Pageable pageable, String name) {
-        return iProductRepository.findAllByNameContaining(pageable, name);
-    }
-
-    @Override
     public List<Product> findByIsDeletedFalse(Pageable pageable) {
         return iProductRepository.findByIsDeletedFalse(pageable);
     }

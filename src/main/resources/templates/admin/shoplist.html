@@ -167,12 +167,6 @@
         <td th:text="${shop.email}"></td>
         <td th:text="${shop.address}"></td>
         <td th:text="${shop.slogan}"></td>
-        <td>
-            <img th:if="${shop.avatarImage != null}" th:src="@{'/uploads/avatars/' + shop.avatarImage}" alt="Avatar" width="50">
-            <span th:if="${shop.avatarImage == null}">Không có ảnh</span>
-        </td>
-        <td>
-        </td>
     </tr>
     </tbody>
 </table>
