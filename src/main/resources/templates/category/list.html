@@ -3,42 +3,59 @@
 <head>
     <title>Danh sách danh mục</title>
     <style>
-        /* Đặt font chung cho trang */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f8f8;
+        /* Thêm hiệu ứng xuất hiện */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hiệu ứng hover */
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         /* Container chứa danh mục */
         .category-list-container {
             display: flex;
-            flex-wrap: wrap; /* Cho phép các item xuống dòng khi không đủ chỗ */
-            gap: 20px; /* Khoảng cách giữa các item */
+            flex-wrap: wrap;
+            gap: 20px;
             padding: 20px;
-            justify-content: flex-start; /* Canh các item từ trái qua phải */
+            justify-content: flex-start;
         }
 
         /* Ô danh mục */
         .category-item {
-            width: 200px; /* Mỗi item có chiều rộng cố định */
-            height: 200px; /* Chiều cao cố định */
+            width: 200px;
+            height: 200px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            background-color: #ff6600; /* Màu cam */
+            background-color: #ff6600;
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
             font-size: 18px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            animation: fadeIn 0.8s ease-in-out; /* Hiệu ứng fade-in */
         }
 
+        /* Hover - hiệu ứng nhảy nhẹ */
         .category-item:hover {
-            transform: scale(1.05); /* Hiệu ứng khi hover */
+            animation: bounce 0.5s ease-in-out;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         /* Liên kết trong ô danh mục */
@@ -52,10 +69,6 @@
             text-decoration: underline;
         }
 
-        /* Đảm bảo nội dung giữa header và footer có thể cuộn */
-        .main-content {
-            padding-bottom: 60px; /* Dự phòng cho footer */
-        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/admincss.css"/>

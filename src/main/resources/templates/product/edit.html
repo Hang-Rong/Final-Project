@@ -2,8 +2,84 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Chỉnh sửa sản phẩm</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/admincss.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    div {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      width: 100%;
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #007bff;
+      font-size: 16px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
 <h1>Chỉnh sửa sản phẩm</h1>
 
 <form th:action="@{/products/edit/{id}(id=${product.id})}" th:object="${product}" method="post" enctype="multipart/form-data">
@@ -36,6 +112,8 @@
   </div>
 </form>
 
-<a href="/products">Quay lại danh sách sản phẩm</a>
+<a href="/categories/list">Quay lại danh sách sản phẩm</a>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

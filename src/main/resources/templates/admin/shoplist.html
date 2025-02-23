@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Danh sách cửa hàng</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/admincss.css"/>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,22 +73,7 @@
         .btn-back:hover {
             background-color: #c82333;
         }
-
-        header {
-            display: flex;
-            justify-content: space-between; /* Tiêu đề bên trái, user-info bên phải */
-            align-items: center;
-            padding: 15px 20px;
-            background-color: #4CAF50;
-            color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
+        
         .user-info {
             display: flex;
             align-items: center;
@@ -126,18 +114,7 @@
 </head>
 <body>
 
-<header>
-    <h1>ADMIN SITE</h1>
-    <div class="user-info">
-        <div class="user-info">
-            <span>Good day:
-                <span th:text="${#authentication.name}"></span>
-            </span>
-            <a href="/change-password" class="change-password">Đổi mật khẩu</a>
-            <a href="/logout" class="logout">Logout</a>
-        </div>
-    </div>
-</header>
+<div th:replace="~{fragments/header :: header}"></div>
 
 <h1>Danh sách Cửa Hàng</h1>
 
@@ -176,5 +153,6 @@
 
 <a href="/admin">Quay lại</a>
 
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

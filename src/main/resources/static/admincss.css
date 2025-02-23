@@ -67,6 +67,14 @@ header h1 {
     background-color: #388e3c;
 }
 
+.back {
+    background-color: #4c54af;
+}
+
+.back:hover {
+    background-color: #251e5d;
+}
+
 /* Menu container with festive styling */
 .menu-container {
     display: flex;

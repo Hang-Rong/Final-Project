@@ -7,22 +7,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="/admincss.css"/>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      padding: 20px;
+    /* Hiệu ứng xuất hiện (fade-in) */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
+    /* Hiệu ứng hover (zoom-in) */
+    @keyframes zoomIn {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.05);
+      }
     }
 
-    h1 {
-      text-align: center;
-      color: #007bff;
-    }
-
+    /* Container danh sách sản phẩm */
     .product-list {
       display: flex;
       flex-wrap: wrap;
@@ -30,6 +37,7 @@
       justify-content: center;
     }
 
+    /* Ô sản phẩm */
     .product-item {
       width: 220px;
       background: white;
@@ -41,48 +49,47 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      animation: fadeIn 0.8s ease-in-out; /* Hiệu ứng xuất hiện */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
+    /* Hover vào sản phẩm */
+    .product-item:hover {
+      animation: zoomIn 0.3s ease-in-out forwards;
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Ảnh sản phẩm */
     .product-item img {
       width: 100%;
       height: 180px;
       object-fit: cover;
       border-radius: 8px;
+      transition: transform 0.3s ease-in-out;
     }
 
-    .product-info h2 {
-      font-size: 16px;
-      margin: 5px 0;
-      color: #333;
+    /* Hover vào ảnh phóng to */
+    .product-item img:hover {
+      transform: scale(1.1);
     }
 
-    .product-info p {
-      font-size: 14px;
-      margin: 3px 0;
-    }
-
+    /* Nút bấm */
     .product-actions a {
       display: block;
       margin-top: 5px;
-      padding: 5px;
+      padding: 8px;
       text-decoration: none;
       border-radius: 5px;
       text-align: center;
+      font-weight: bold;
+      transition: all 0.3s ease;
     }
 
-    .btn-success { background-color: #28a745; color: white; }
-    .btn-warning { background-color: #ffc107; color: black; }
-    .btn-danger { background-color: #dc3545; color: white; }
-    .btn-primary { background-color: #007bff; color: white; }
+    .btn-success:hover { background-color: #218838; }
+    .btn-warning:hover { background-color: #e0a800; }
+    .btn-danger:hover { background-color: #c82333; }
+    .btn-primary:hover { background-color: #0056b3; }
 
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      text-decoration: none;
-      color: #007bff;
-      font-size: 16px;
-    }
   </style>
 </head>
 <body>
@@ -113,7 +120,12 @@
         <a th:href="@{/products/delete/{id}(id=${product.id})}"
            onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"
            class="btn btn-danger">Xóa</a>
-        <a th:href="@{/shoppingcart/ordernow/{id}(id=${product.id})}" class="btn btn-success">Order</a>
+        <!-- Nút Order - Chỉ hiển thị nếu sản phẩm đang bán -->
+        <a th:if="${!product.isOutOfStock}"
+           th:href="@{/shoppingcart/ordernow/{id}(id=${product.id})}"
+           class="btn btn-success">
+          Order
+        </a>
       </div>
     </div>
   </div>
