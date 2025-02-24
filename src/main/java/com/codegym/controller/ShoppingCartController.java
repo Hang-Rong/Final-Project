@@ -131,47 +131,4 @@ public class ShoppingCartController {
     }
 
 
-//    @SuppressWarnings("unchecked")
-//    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-//    public String checkout(HttpSession session, ModelMap model) {
-//        List<Items> cart = (List<Items>) session.getAttribute("cart");
-//
-//        // Kiểm tra xem giỏ hàng có trống không
-//        if (cart == null || cart.isEmpty()) {
-//            model.addAttribute("message", "Giỏ hàng trống, không thể thanh toán.");
-//            return "/product/cart"; // Nếu giỏ hàng trống, trả về trang giỏ hàng
-//        }
-//
-//        // Tạo đơn hàng mới
-//        Order order = new Order();
-//        order.setOrderDate(new Date());
-//        om.save(order);
-//
-//        // Tính tổng giá trị giỏ hàng
-//        double totalPrice = 0;
-//        for (Items item : cart) {
-//            Product product = item.getProduct();
-//            totalPrice += product.getPrice() * item.getQuantity(); // Tính tổng giá trị
-//            OrderDetail orderDetail = new OrderDetail();
-//            orderDetail.setOrder(order);
-//            orderDetail.setProduct(product);
-//            orderDetail.setQuanity(item.getQuantity());
-//            odm.save(orderDetail);
-//        }
-//
-//        // Cập nhật tổng giá vào đơn hàng
-//        order.setTotalPrice(totalPrice);
-//        om.save(order);
-//
-//        // Xóa giỏ hàng trong session sau khi thanh toán thành công
-//        session.removeAttribute("cart");
-//
-//        // Truyền dữ liệu vào model để hiển thị
-//        model.addAttribute("totalPrice", totalPrice);
-//        model.addAttribute("order", order);
-//
-//        return "/product/checkout";
-//
-//
-//    }
 }

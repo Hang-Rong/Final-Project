@@ -94,13 +94,35 @@ public class ProductController {
         return modelAndView;
     }
 
-    // Lưu chỉnh sửa sp (Update)
     @PostMapping("/edit/{id}")
-    public ModelAndView updateProduct(@PathVariable("id") Long id, @ModelAttribute("product") Product product) {
+    public ModelAndView updateProduct(@PathVariable("id") Long id,
+                                      @ModelAttribute("product") Product product,
+                                      @RequestParam(value = "image", required = false) MultipartFile image) {
+        // Cập nhật thông tin sản phẩm
         product.setId(id);
+
+        // Kiểm tra nếu có hình ảnh mới thì upload
+        if (image != null && !image.isEmpty()) {
+            try {
+                String uploadDir = "uploads/images/";
+                Path path = Paths.get(uploadDir + image.getOriginalFilename());
+                Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+                // Cập nhật tên hình ảnh mới
+                product.setImageName(image.getOriginalFilename());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Lưu sản phẩm đã cập nhật
         productService.save(product);
-        return new ModelAndView("redirect:/categories/list");
+
+        // Chuyển hướng về trang sản phẩm của danh mục sản phẩm
+        return new ModelAndView("redirect:/categories/products/" + product.getCategory().getId());
     }
+
+
 
     // Xóa mềm sản phẩm (đánh dấu isDeleted = true)
     @GetMapping("/delete/{id}")

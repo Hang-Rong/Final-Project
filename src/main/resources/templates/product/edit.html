@@ -19,9 +19,10 @@
     <label for="quantity">Số lượng:</label>
     <input type="number" id="quantity" th:field="*{quantity}" />
   </div>
+
   <div>
-    <label for="imageURL">URL Hình ảnh:</label>
-    <input type="text" id="imageURL" th:field="*{imageName}" />
+    <label for="newImage">Chọn hình ảnh mới (nếu có):</label>
+    <input type="file" id="newImage" name="image" />
   </div>
   <div>
     <label for="description">Mô tả:</label>
