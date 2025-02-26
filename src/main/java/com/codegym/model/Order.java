@@ -15,7 +15,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
-    private int id;
+    private Long id;
 //    private Date date;
 
 
@@ -35,7 +35,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, Date orderDate, double totalPrice) {
+    public Order(Long id, Date orderDate, double totalPrice) {
         this.id = id;
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;

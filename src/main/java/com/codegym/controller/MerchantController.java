@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,42 +45,56 @@ public class MerchantController {
 
     @PostMapping("/register")
     public ModelAndView registerSubmit(@ModelAttribute("merchantForm") Merchant merchantForm) {
+        // Lấy AppUser đang đăng nhập
+        AppUser appUser = appUserService.getCurrentUser().orElse(null);
 
-        Merchant merchant = new Merchant();
-        merchant.setName(merchantForm.getName());
-        merchant.setPhone(merchantForm.getPhone());
-        merchant.setEmail(merchantForm.getEmail());
-        merchant.setAddress(merchantForm.getAddress());
-        merchant.setSlogan(merchantForm.getSlogan());
+        if (appUser != null) {
+            // Tạo Merchant mới
+            Merchant merchant = new Merchant();
+            merchant.setName(merchantForm.getName());
+            merchant.setPhone(merchantForm.getPhone());
+            merchant.setEmail(merchantForm.getEmail());
+            merchant.setAddress(merchantForm.getAddress());
+            merchant.setSlogan(merchantForm.getSlogan());
 
-        merchantService.save(merchant);
+            // Lưu Merchant mới vào cơ sở dữ liệu
+            merchantService.save(merchant);
+            System.out.println("Merchant ID after saving: " + merchant.getId());
 
+            // Gán Merchant cho AppUser đang đăng nhập
+            appUser.setMerchant(merchant);
 
-        AppUser appUser = new AppUser();
-        appUser.setUsername(merchantForm.getEmail());
-        appUser.setPassword("defaultPassword");
-        appUser.setMerchant(merchant);
+            // Lưu lại thông tin AppUser đã gán Merchant
+            appUserService.save(appUser);
 
-        appUserService.save(appUser);
+            // Gửi email thông báo
+            String subject = "New Merchant Registration";
+            String content = "<h3>Thông tin đăng ký merchant:</h3>"
+                    + "<p><b>Name:</b> " + merchant.getName() + "</p>"
+                    + "<p><b>Phone:</b> " + merchant.getPhone() + "</p>"
+                    + "<p><b>Email:</b> " + merchant.getEmail() + "</p>"
+                    + "<p><b>Address:</b> " + merchant.getAddress() + "</p>"
+                    + "<p><b>Slogan:</b> " + merchant.getSlogan() + "</p>";
 
-        String subject = "New Merchant Registration";
-        String content = "<h3>Thông tin đăng ký merchant:</h3>"
-                + "<p><b>Name:</b> " + merchant.getName() + "</p>"
-                + "<p><b>Phone:</b> " + merchant.getPhone() + "</p>"
-                + "<p><b>Email:</b> " + merchant.getEmail() + "</p>"
-                + "<p><b>Address:</b> " + merchant.getAddress() + "</p>"
-                + "<p><b>Slogan:</b> " + merchant.getSlogan() + "</p>";
+            try {
+                emailService.sendRegistrationEmail("hangrongv25@gmail.com", subject, content);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
 
-        try {
-            emailService.sendRegistrationEmail("hangrongv25@gmail.com", subject, content);
-        } catch (MessagingException e) {
-            e.printStackTrace();
+            // Trả về trang home của merchant sau khi đã đăng ký
+            ModelAndView mav = new ModelAndView("/merchant/home");
+            mav.addObject("merchant", merchant);
+            return mav;
+        } else {
+            // Nếu không tìm thấy AppUser đang đăng nhập
+            ModelAndView mav = new ModelAndView("error_page");
+            mav.addObject("message", "Không tìm thấy người dùng đăng nhập.");
+            return mav;
         }
-
-        ModelAndView mav = new ModelAndView("/merchant/home");
-        mav.addObject("merchant", merchant);
-        return mav;
     }
+
+
 
 
     @GetMapping("/customer-info")

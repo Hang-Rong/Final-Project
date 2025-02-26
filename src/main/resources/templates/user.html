@@ -14,87 +14,33 @@
 
         /* Body setup with Flexbox for vertical alignment */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #f4f4f4;
+            background-color: #fff9f0; /* Màu cam nhạt nền */
         }
 
-
-        /* Main section to center content */
-        main {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Footer Style */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 14px;
-        }
-
-        /* Table Style */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-        }
-
-        table th, table td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        table th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        /* Links Style */
-        a {
-            text-decoration: none;
-            color: white;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            border-radius: 5px;
-            margin: 5px;
-            transition: background-color 0.3s;
-        }
-
-        a:hover {
-            background-color: #45a049;
-        }
-
+        /* Header Style */
         header {
             display: flex;
-            justify-content: space-between; /* Tiêu đề bên trái, user-info bên phải */
+            justify-content: space-between;
             align-items: center;
             padding: 15px 20px;
-            background-color: #4CAF50;
+            background-color: #ff6f00; /* Màu cam Tết */
             color: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 28px;
         }
 
         .user-info {
             display: flex;
             align-items: center;
-            gap: 15px; /* Khoảng cách giữa các phần tử */
+            gap: 15px;
         }
 
         .username {
@@ -108,24 +54,92 @@
             border-radius: 5px;
             font-size: 14px;
             transition: background 0.3s ease-in-out;
+            color: white;
         }
 
         .change-password {
-            background-color: #ff9800;
-            color: white;
+            background-color: #f44336; /* Màu đỏ cho nút Đổi mật khẩu */
         }
 
         .change-password:hover {
-            background-color: #e68900;
+            background-color: #d32f2f;
         }
 
         .logout {
-            background-color: #d32f2f;
-            color: white;
+            background-color: #4caf50; /* Màu xanh lá cho nút Logout */
         }
 
         .logout:hover {
-            background-color: #b71c1c;
+            background-color: #388e3c;
+        }
+
+        /* Menu container with festive styling */
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .menu-item {
+            background: linear-gradient(135deg, #ff9800, #ff5722); /* Gradient cam và đỏ */
+            border-radius: 12px;
+            margin: 12px;
+            width: 270px;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            color: white;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px); /* Hover effect */
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        .menu-item a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .menu-item a:hover {
+            color: #ffeb3b; /* Màu vàng khi hover vào link */
+        }
+
+        .menu-item i {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover i {
+            transform: scale(1.2); /* Zoom icon khi hover */
+        }
+
+        /* Icon Style - Using Font Awesome */
+        .fas {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        footer p {
+            font-size: 16px;
         }
 
     </style>
@@ -134,23 +148,28 @@
 
 <header>
     <h1>WELCOME</h1>
+
     <div class="user-info">
-        <div class="user-info">
-            <span>Good day:
-                <span th:text="${#authentication.name}"></span>
-            </span>
-            <a href="/change-password" class="change-password">Đổi mật khẩu</a>
-            <a href="/logout" class="logout">Logout</a>
-        </div>
+        <span>Good day: <span th:text="${#authentication.name}"></span></span>
+        <a href="/change-password" class="change-password">Đổi mật khẩu</a>
+        <a href="/logout" class="logout">Logout</a>
     </div>
 </header>
 
 <main>
-    <div>
-        <a href="categories/list">DANH SÁCH SẢN PHẨM</a>
-        <a href="merchant/register">ĐĂNG KÍ CỬA HÀNG</a>
-<!--        <a href="user/request-form"> dang ki kinh doanh</a>-->
-
+    <div class="menu-container">
+        <div class="menu-item">
+            <i class="fas fa-box-open"></i>
+            <a href="categories/list">DANH SÁCH SẢN PHẨM</a>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-clipboard-list"></i>
+            <a href="request-form">YÊU CẦU CẤP PHÉP KINH DOANH</a>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-store"></i>
+            <a href="merchant/register">ĐĂNG KÍ CỬA HÀNG</a>
+        </div>
     </div>
 </main>
 

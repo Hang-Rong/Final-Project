@@ -66,7 +66,7 @@ public class AppUserService implements IAppUserService, UserDetailsService {
             String username = authentication.getName();
             return appUserRepo.findByUsername(username);
         }
-        return Optional.empty(); // Trả về Optional.empty nếu không tìm thấy người dùng
+        return Optional.empty();
     }
 
 

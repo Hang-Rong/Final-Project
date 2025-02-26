@@ -6,6 +6,7 @@ import com.codegym.service.IOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +32,10 @@ public class OrderDetailService implements IOrderDetailService {
     @Override
     public void remove(Long id) {
         iOrderDetailRepository.deleteById(id);
+    }
+
+    @Override
+    public List<OrderDetail> findByOrderId(Long orderId) {
+        return iOrderDetailRepository.findByOrderId(orderId);
     }
 }

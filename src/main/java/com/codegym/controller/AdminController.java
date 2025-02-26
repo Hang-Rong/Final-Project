@@ -1,9 +1,6 @@
 package com.codegym.controller;
 import com.codegym.model.*;
-import com.codegym.service.IAppRoleService;
-import com.codegym.service.IAppUserService;
-import com.codegym.service.ICustomerService;
-import com.codegym.service.IMerchantService;
+import com.codegym.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +14,9 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminController {
 
+
+    @Autowired
+    private IRequestFormService requestFormService;
 
     @Autowired
     private IAppUserService appUserService;
@@ -61,6 +61,39 @@ public class AdminController {
 
         return "redirect:/admin/listuser";
     }
+
+
+    @GetMapping("/requests")
+    public String showAllRequests(Model model) {
+        Iterable<RequestForm> requestForms = requestFormService.findAll();
+        model.addAttribute("requestForms", requestForms);
+        return "/admin/requests";
+    }
+
+    @PostMapping("/markAsRead/{id}")
+    public String markAsRead(@PathVariable("id") Long id) {
+        Optional<RequestForm> requestFormOptional = requestFormService.findById(id);
+
+        if (requestFormOptional.isPresent()) {
+            RequestForm requestForm = requestFormOptional.get();
+            requestForm.setRead(true);
+            requestFormService.save(requestForm);
+        }
+
+        return "redirect:/admin/requests";
+    }
+
+   @PostMapping("/markAsUnread/{id}")
+   public String markAsUnread(@PathVariable("id") Long id) {
+        Optional<RequestForm> requestFormOptional = requestFormService.findById(id);
+        if (requestFormOptional.isPresent()) {
+            RequestForm requestForm = requestFormOptional.get();
+            requestForm.setRead(false);
+            requestFormService.save(requestForm);
+        }
+            return "redirect:/admin/requests";
+   }
+
 
 
 

@@ -33,7 +33,7 @@ public class ListUserController {
 
     @GetMapping("/deleted-users")
     public String listDeletedUsers(Model model) {
-        List<Customer> deletedCustomers = customerService.getDeletedCustomers(); // Lấy danh sách khách đã bị xóa mềm
+        List<Customer> deletedCustomers = customerService.getDeletedCustomers();
         model.addAttribute("deletedList", deletedCustomers);
         return "deleted-users";
     }

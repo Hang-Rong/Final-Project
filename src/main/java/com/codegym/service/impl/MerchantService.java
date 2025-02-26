@@ -5,9 +5,11 @@ import com.codegym.repository.IMerchantRepository;
 import com.codegym.service.IMerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 @Service
+@Transactional
 public class MerchantService implements IMerchantService {
 
     private final IMerchantRepository merchantRepository;

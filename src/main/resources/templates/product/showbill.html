@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hóa Đơn</title>
+    <style>
+        /* Các style tùy chỉnh để hiển thị hóa đơn đẹp hơn */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Hóa Đơn Của Bạn</h1>
+
+    <h3>Thông Tin Đơn Hàng</h3>
+    <p>Mã Đơn Hàng: <span th:text="${order.id}"></span></p>
+    <p>Ngày Đặt Hàng: <span th:text="${#dates.format(order.orderDate, 'dd/MM/yyyy')}"></span></p>
+    <p>Phương Thức Thanh Toán: <span th:text="${order.paymentMethod}"></span></p>
+    <p>Trạng Thái: <span th:text="${order.status}"></span></p>
+
+    <h3>Chi Tiết Hóa Đơn</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Hình Ảnh</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Số Lượng</th>
+            <th>Giá</th>
+            <th>Tổng Tiền</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="detail : ${orderDetails}">
+            <td><img th:src="@{'/uploads/images/' + ${detail.product.imageName}}" alt="Product Image" width="100">
+            </td>
+            <td th:text="${detail.product.name}"></td>
+            <td th:text="${detail.quanity}"></td>
+            <td th:text="${detail.product.price}"></td>
+            <td th:text="${detail.product.price * detail.quanity}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="total">Tổng Tiền Thanh Toán: <span th:text="${totalPrice}"></span> VND</h3>
+    <h1>Cảm ơn bạn đã đặt hàng !</h1>
+
+    <a th:href="@{/products}">Trở Về Trang Chủ</a>
+</div>
+</body>
+</html>

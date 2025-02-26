@@ -76,22 +76,23 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/register").permitAll()
 
 
-                        // Các đường dẫn dành cho USER
-                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER","ROLE_MERCHANT")
-                        .requestMatchers("/admin/**").hasAnyRole("ADMIN","MERCHANT")
-                        .requestMatchers("/products**").hasAnyRole("USER","ADMIN","MERCHANT")
-                        .requestMatchers("/products**", "/products/**").hasAnyRole("MERCHANT")
-                        .requestMatchers("/merchant**", "/merchant/**").hasAnyRole("MERCHANT", "USER")
+                                // Các đường dẫn dành cho USER
+                                .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MERCHANT")
+                                .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
 
-                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/products**").hasAnyRole("USER", "ADMIN", "MERCHANT")
+                                .requestMatchers("/products**", "/products/**").hasAnyRole("MERCHANT")
+                                .requestMatchers("/merchant**", "/merchant/**").hasAnyRole("MERCHANT")
+
+                                .requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MERCHANT")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
 //                      .requestMatchers("/products**").hasAnyAuthority("ROLE_USER", "ROLE_MERCHANT")
 //                      .requestMatchers("/products/**").hasRole("MERCHANT")
-                         .requestMatchers("/reviews/**").hasRole("USER")
+                                .requestMatchers("/reviews/**").hasRole("USER")
 
-                         .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
+                                .requestMatchers("/shoppingcart/**", "/shoppingcart/ordernow/**", "/shoppingcart/delete/**").hasRole("USER")
 
-                        .anyRequest().authenticated()
+                                .anyRequest().authenticated()
                 )
                 .exceptionHandling(customizer -> customizer.accessDeniedHandler(customAccessDeniedHandler())) // Xử lý từ chối quyền truy cập
                 .csrf(csrf -> csrf.disable()); // Vô hiệu hóa CSRF nếu không cần thiết

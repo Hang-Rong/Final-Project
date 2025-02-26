@@ -44,6 +44,8 @@ public class ProductController {
         return modelAndView;
     }
 
+
+
     @PostMapping("/create")
     public ModelAndView saveProduct(@ModelAttribute("product") Product product,
                                     @RequestParam("image") MultipartFile image) {
@@ -67,11 +69,13 @@ public class ProductController {
         }
 
 
+
         productService.save(product);
 
         ModelAndView modelAndView = new ModelAndView("/product/create");
         modelAndView.addObject("product", new Product());
         modelAndView.addObject("categories", categoryService.findAll());
+
         return modelAndView;
     }
 

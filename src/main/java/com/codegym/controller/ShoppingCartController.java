@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -95,27 +96,47 @@ public class ShoppingCartController {
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-    public String checkout(HttpSession session) {
+    public String checkout(HttpSession session, ModelMap model) {
         List<Items> cart = (List<Items>) session.getAttribute("cart");
 
-        //Add new Order
+        // Tính tổng số tiền cần thanh toán
+        double totalPrice = 0.0;
+        for (Items item : cart) {
+            Product product = item.getProduct();
+            int quantity = item.getQuantity();
+            totalPrice += product.getPrice() * quantity; // Giả sử Product có thuộc tính price
+        }
+
+        // Tạo mới một đơn hàng
         Order order = new Order();
         order.setOrderDate(new Date());
-        om.save(order);
+        order.setTotalPrice(totalPrice); // Cập nhật tổng số tiền vào đơn hàng
+        om.save(order); // Lưu đơn hàng
 
-        //Add new OrderDetail
+        // Thêm chi tiết đơn hàng
         for (Items item : cart) {
             Product product = item.getProduct();
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrder(order);
             orderDetail.setProduct(product);
             orderDetail.setQuanity(item.getQuantity());
-            odm.save(orderDetail);
+            odm.save(orderDetail); // Lưu chi tiết đơn hàng
         }
 
+        // Xóa giỏ hàng sau khi thanh toán
         session.removeAttribute("cart");
-        return "/product/cart";
+        model.addAttribute("order", order); // Thêm đơn hàng vào model
+        model.addAttribute("orderDetails", odm.findByOrderId(order.getId()));
+        // Truyền tổng giá trị vào model để hiển thị trên giao diện
+        model.addAttribute("totalPrice", totalPrice);
+
+
+        return "/product/showbill";
     }
+
+
+
+
 
 
     @SuppressWarnings("unchecked")

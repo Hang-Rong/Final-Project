@@ -1,8 +1,10 @@
 package com.codegym.controller;
 
 import com.codegym.model.AppUser;
+import com.codegym.model.Customer;
 import com.codegym.service.IAppUserService;
 
+import com.codegym.service.impl.CurrentUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ public class UserController {
     @Autowired
     private IAppUserService appUserService;
 
+    @Autowired
+    private CurrentUserService currentUserService;
+
 
 
 
@@ -27,27 +32,26 @@ public class UserController {
         return "user";
     }
 
+    @GetMapping("/profile")
+    public String getUserProfile(Model model) {
+        AppUser appUser = currentUserService.getCurrentUser();
 
-//    @GetMapping("/request-form")
-//    public String showRequestForm(Model model) {
-//        model.addAttribute("requestRegister", new RequestRegister());
-//        return "request-form";
-//    }
-//
-//    @PostMapping("/send-request")
-//    public String sendRequest(@ModelAttribute RequestRegister requestRegister, @RequestParam Long userId) {
-//        AppUser appUser = appUserService.findById(userId).orElse(null);
-//        if (appUser != null) {
-//            requestRegister.setCustomer(appUser.getCustomer());
-//            requestRegister.setDate(new Date());
-//            requestRegister.setSent(true);
-//
-//            requestRegisterService.save(requestRegister);
-//            return "redirect:/user/request-form";
-//        }else {
-//            return "error";
-//        }
-//    }
+        if (appUser != null) {
+            Customer customer = appUser.getCustomer();
+            if (customer != null) {
+                model.addAttribute("appUser", appUser);
+                model.addAttribute("customer", customer);
+                return "user/profile";
+            } else {
+                model.addAttribute("message", "Không tìm thấy thông tin khách hàng.");
+                return "error_page";
+            }
+        } else {
+            model.addAttribute("message", "Không tìm thấy người dùng.");
+            return "error_page";
+        }
+    }
+
 
 
 }

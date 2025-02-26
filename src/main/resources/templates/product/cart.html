@@ -92,22 +92,24 @@
 </div>
 <br>
 <div>
-    <h1>Shopping Cart</h1>
+    <h1>Giỏ Hàng Của Bạn</h1>
     <form th:action="@{/shoppingcart/update}" th:method="POST">
         <table>
             <tr>
-                <th>Options</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity<input type="submit" value="update"/></th>
-                <th>Sub Total</th>
+                <th>Hành Động</th>
+                <th>Tên Sản Phẩm</th>
+                <th>Giá tiền</th>
+                <th>Số lượng<input type="submit" value="update"/></th>
+
+                <th>Tổng tiền</th>
             </tr>
             <tr th:each="pr,iterStat : ${session.cart}">
                 <td align="center">
-                    <a th:href="@{/shoppingcart/delete/__${pr.product.id}__}">remove</a>
+                    <a th:href="@{/shoppingcart/delete/__${pr.product.id}__}">Xóa sản phẩm khỏi giỏ hàng</a>
                 </td>
                 <td th:text="${pr.product.name.toString()}"></td>
                 <td th:text="${pr.product.price.toString()}"></td>
+
                 <td>
                     <input type="text" th:name="qty" th:value="${pr.quantity.toString()}"/>
                 </td>
@@ -116,7 +118,11 @@
         </table>
         <br>
         <br>
-        <a th:href="@{/shoppingcart/checkout}">Checkout</a>
+        <a th:href="@{/shoppingcart/checkout}">Thanh Toán</a>
+        <br>
+        <br>
+        <a href="javascript:window.history.back();" >Tiếp tục mua sắm</a>
+
         <br>
         <br>
 

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách yêu cầu</title>
+</head>
+<body>
+<h1>Danh sách yêu cầu</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Ngày</th>
+        <th>Lý do</th>
+        <th>Người tạo</th>
+        <th>Trạng thái</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+    <style>
+        /* General reset for margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Style */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Logout button positioned in the top-right corner */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #ff3333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+
+        /* Main content */
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Button Styling */
+        button {
+            padding: 8px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Form Styling */
+        form {
+            margin: 0;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* Back button */
+        .btn-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive table for smaller screens */
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+
+        select, label {
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+
+        .btn-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .btn-back:hover {
+            background-color: #45a049;
+        }
+
+
+        @media (max-width: 768px) {
+            .btn-back {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+
+    </style>
+    <tbody>
+    <tr th:each="requestForm : ${requestForms}">
+        <td th:text="${requestForm.id}"></td>
+        <td th:text="${requestForm.date}"></td>
+        <td th:text="${requestForm.reason}"></td>
+        <td th:text="${requestForm.appUser.username}"></td>
+        <td th:text="${requestForm.isRead ? 'Đã xử lý' : 'Chưa xử lý'}"></td>
+        <td>
+
+            <form th:action="@{/admin/markAsRead/{id}(id=${requestForm.id})}" method="post">
+                <button type="submit" th:disabled="${requestForm.isRead}" th:text="${requestForm.isRead ? 'Chưa xử lí' : 'Đã xử lí'}"></button>
+            </form>
+            <form th:action="@{/admin/markAsUnread/{id}(id=${requestForm.id})}" method="post">
+                <button type="submit" th:disabled="${!requestForm.isRead}" th:text="${requestForm.isRead ? 'Xử lí' : ''}"></button>
+            </form>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+<a href="/admin" class="btn-back">Quay về trang chủ</a>
+<a href="/admin/listuser" class="btn-back">Tiến tới trang quản lí</a>
+
+</body>
+</html>

@@ -73,23 +73,71 @@
       transform: scale(1.1);
     }
 
-    /* Nút bấm */
-    .product-actions a {
-      display: block;
-      margin-top: 5px;
-      padding: 8px;
-      text-decoration: none;
-      border-radius: 5px;
+    /* Định dạng chung cho các nút .btn */
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
       text-align: center;
+      text-decoration: none; /* Loại bỏ gạch chân */
+      border-radius: 5px;
       font-weight: bold;
-      transition: all 0.3s ease;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
     }
 
+    /* Màu nền các nút tùy theo loại */
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+      border: 1px solid #007bff;
+    }
+
+    .btn-success {
+      background-color: #28a745;
+      color: white;
+      border: 1px solid #28a745;
+    }
+
+    .btn-warning {
+      background-color: #ffc107;
+      color: white;
+      border: 1px solid #ffc107;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+      border: 1px solid #dc3545;
+    }
+
+    /* Hover effects cho các nút */
+    .btn:hover {
+      transform: translateY(-2px); /* Tạo hiệu ứng đẩy lên khi hover */
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Tạo bóng đổ khi hover */
+    }
+
+    /* Hover cho các loại nút khác nhau */
+    .btn-primary:hover { background-color: #0056b3; }
     .btn-success:hover { background-color: #218838; }
     .btn-warning:hover { background-color: #e0a800; }
     .btn-danger:hover { background-color: #c82333; }
-    .btn-primary:hover { background-color: #0056b3; }
 
+    /* Thêm khoảng cách giữa các nút */
+    .btn + .btn {
+      margin-left: 10px;
+    }
+
+    /* Nút "Quay lại danh mục" */
+    .back-link {
+      background-color: #f8f9fa;
+      color: #007bff;
+      border: 1px solid #007bff;
+    }
+
+    .back-link:hover {
+      background-color: #e2e6ea;
+    }
   </style>
 </head>
 <body>
@@ -98,7 +146,7 @@
   <h1>Sản phẩm trong danh mục: <span th:text="${category.name}"></span></h1>
 
   <div class="product-list">
-    <div th:each="product : ${products}" class="product-item">
+    <div th:each="product : ${products}" class="product-item" th:if="${!product.isDeleted}">
       <img th:src="@{'/uploads/images/' + ${product.imageName}}" alt="Hình ảnh sản phẩm" />
       <div class="product-info">
         <h2 th:text="${product.name}"></h2>
@@ -117,7 +165,7 @@
           <span th:if="${!product.isOutOfStock}">Ngưng bán</span>
         </a>
         <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-primary">Chỉnh sửa</a>
-        <a th:href="@{/products/delete/{id}(id=${product.id})}"
+        <a th:href="@{/products/delete/{id}(id=${product.id})} "
            onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"
            class="btn btn-danger">Xóa</a>
         <!-- Nút Order - Chỉ hiển thị nếu sản phẩm đang bán -->
@@ -128,10 +176,11 @@
         </a>
       </div>
     </div>
+
   </div>
 </div>
-
-<a class="back-link" href="/categories/list">Quay lại danh mục</a>
+<a href="/products/create" class="btn btn-primary">Thêm Sản Phẩm</a>
+<a class="back-link btn btn-primary" href="/categories/list">Quay lại danh mục</a>
 <div th:replace="~{fragments/userFooter :: footer}"></div>
 </body>
 </html>
