@@ -74,6 +74,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/register").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/register").permitAll()
+                                .requestMatchers("/password","/password/**").permitAll()
+                                .requestMatchers("/complaint","/complaint/**").permitAll()
+                                .requestMatchers("/forgot-password","/forgot-password/**").permitAll()
 
 
                                 // Các đường dẫn dành cho USER
