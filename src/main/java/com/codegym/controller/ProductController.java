@@ -102,31 +102,59 @@ public class ProductController {
     public ModelAndView updateProduct(@PathVariable("id") Long id,
                                       @ModelAttribute("product") Product product,
                                       @RequestParam(value = "image", required = false) MultipartFile image) {
-        // Cập nhật thông tin sản phẩm
-        product.setId(id);
+        // Lấy sản phẩm hiện tại từ DB
+        Product existingProduct = productService.findById(id).orElse(null);
+        if (existingProduct == null) {
+            return new ModelAndView("redirect:/products"); // Hoặc chuyển hướng đến trang lỗi
+        }
 
-        // Kiểm tra nếu có hình ảnh mới thì upload
-        if (image != null && !image.isEmpty()) {
+        // Giữ nguyên category nếu không có category mới
+        if (product.getCategory() == null) {
+            product.setCategory(existingProduct.getCategory());
+        }
+
+        // Giữ nguyên hình ảnh nếu không có hình ảnh mới
+        if (image == null || image.isEmpty()) {
+            product.setImageName(existingProduct.getImageName());
+        } else {
             try {
                 String uploadDir = "uploads/images/";
                 Path path = Paths.get(uploadDir + image.getOriginalFilename());
                 Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-                // Cập nhật tên hình ảnh mới
                 product.setImageName(image.getOriginalFilename());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        // Lưu sản phẩm đã cập nhật
+        // Cập nhật sản phẩm
         productService.save(product);
 
-        // Chuyển hướng về trang sản phẩm của danh mục sản phẩm
-        return new ModelAndView("redirect:/categories/products/" + product.getCategory().getId());
+        return new ModelAndView("redirect:/categories/products/" +
+                (product.getCategory() != null ? product.getCategory().getId() : "defaultCategory"));
     }
 
 
+    // ngưng bán sản pohẩm
+    @GetMapping("/toggle-outofstock/{id}")
+    public ModelAndView toggleOutOfStock(@PathVariable("id") Long id, @RequestHeader(value = "Referer", required = false) String referer) {
+        Product product = productService.findById(id).orElse(null);
+        if (product != null) {
+            product.setOutOfStock(!product.isOutOfStock());
+            productService.save(product);
+        }
+        return new ModelAndView("redirect:" + (referer != null ? referer : "/categories/list"));
+    }
+
+    @GetMapping("/search")
+    public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,
+                                       @RequestParam(value = "page", defaultValue = "0") int page,
+                                       @RequestParam(value = "size", defaultValue = "8") int size) {
+        ModelAndView modelAndView = new ModelAndView("/product/list");
+        modelAndView.addObject("products", productService.findAllByNameContainingAndIsDeletedFalse(PageRequest.of(page, size), name));
+        modelAndView.addObject("searchName", name);
+        return modelAndView;
+    }
 
     // Xóa mềm sản phẩm (đánh dấu isDeleted = true)
     @GetMapping("/delete/{id}")
@@ -140,26 +168,6 @@ public class ProductController {
     }
 
 
-    // ngưng bán sản pohẩm
-    @GetMapping("/toggle-outofstock/{id}")
-    public ModelAndView toggleOutOfStock(@PathVariable("id") Long id) {
-        Product product = productService.findById(id).orElse(null);
-        if (product != null) {
-            product.setOutOfStock(!product.isOutOfStock());
-            productService.save(product);
-        }
-        return new ModelAndView("redirect:/categories/list");
-    }
-
-    @GetMapping("/search")
-    public ModelAndView searchProducts(@RequestParam(value = "name", required = false, defaultValue = "") String name,
-                                       @RequestParam(value = "page", defaultValue = "0") int page,
-                                       @RequestParam(value = "size", defaultValue = "8") int size) {
-        ModelAndView modelAndView = new ModelAndView("/product/list");
-        modelAndView.addObject("products", productService.findAllByNameContainingAndIsDeletedFalse(PageRequest.of(page, size), name));
-        modelAndView.addObject("searchName", name);
-        return modelAndView;
-    }
 
 }
 
